@@ -43,6 +43,6 @@ export const convertGoogleDriveUrl = (url: string): string => {
 }
 
 export const isGoogleDriveUrl = (url: string): boolean => {
-  return url && url.includes('drive.google.com')
+  return Boolean(url && url.includes('drive.google.com'))
 }
 
