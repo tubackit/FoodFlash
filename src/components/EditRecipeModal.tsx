@@ -191,8 +191,40 @@ const EditRecipeModal = ({ recipe, onSave, onClose }: EditRecipeModalProps) => {
             />
             {imageUrl && isGoogleDriveUrl(imageUrl) && (
               <p className="text-xs text-green-600 mt-1">
-                ✅ Google Drive Link erkannt
+                ✅ Google Drive Link erkannt - wird automatisch konvertiert
               </p>
+            )}
+            
+            {/* Image Preview */}
+            {imageUrl && (
+              <div className="mt-3">
+                <p className="text-xs font-medium text-gray-700 mb-1">Vorschau:</p>
+                <div className="relative w-full h-40 bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-200">
+                  <img
+                    src={convertGoogleDriveUrl(imageUrl)}
+                    alt="Vorschau"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement
+                      target.style.display = 'none'
+                      const parent = target.parentElement
+                      if (parent) {
+                        parent.innerHTML = '<div class="flex items-center justify-center h-full text-red-500 text-sm p-4 text-center"><div><p class="font-bold">❌ Bild kann nicht geladen werden</p><p class="text-xs mt-1">Prüfe Google Drive Freigabe:<br/>"Jeder mit dem Link"</p></div></div>'
+                      }
+                    }}
+                    onLoad={(e) => {
+                      const target = e.target as HTMLImageElement
+                      const parent = target.parentElement
+                      if (parent) {
+                        const successDiv = document.createElement('div')
+                        successDiv.className = 'absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full font-medium'
+                        successDiv.textContent = '✓ OK'
+                        parent.appendChild(successDiv)
+                      }
+                    }}
+                  />
+                </div>
+              </div>
             )}
 
             {/* Thumbnail Help */}
