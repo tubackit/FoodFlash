@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Recipe } from '../types/recipe'
+import { Recipe, Ingredient } from '../types/recipe'
 
 const STORAGE_KEY = 'foodflash_recipes'
 
@@ -30,7 +30,7 @@ export const useRecipes = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(recipes))
   }, [recipes])
 
-  const addRecipe = (recipe: Omit<Recipe, 'id' | 'createdAt' | 'comments' | 'ingredients'> | Recipe) => {
+  const addRecipe = (recipe: Omit<Recipe, 'id' | 'createdAt' | 'comments' | 'ingredients'> & { ingredients?: Ingredient[] } | Recipe) => {
     // Check if it's already a complete recipe (from import)
     const isCompleteRecipe = 'id' in recipe && 'createdAt' in recipe && 'comments' in recipe
     
@@ -41,7 +41,7 @@ export const useRecipes = () => {
           id: crypto.randomUUID(),
           createdAt: new Date().toISOString(),
           comments: [],
-          ingredients: 'ingredients' in recipe ? recipe.ingredients : [],
+          ingredients: recipe.ingredients || [],
         }
     
     setRecipes((prev) => [newRecipe, ...prev])
