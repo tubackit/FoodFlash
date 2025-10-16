@@ -1,9 +1,10 @@
 import { useState, FormEvent, ChangeEvent, useEffect } from 'react'
 import { X, Save, Sparkles, HelpCircle } from 'lucide-react'
-import { Recipe } from '../types/recipe'
+import { Recipe, Ingredient } from '../types/recipe'
 import { detectPlatform } from '../utils/platformDetector'
 import { extractYouTubeThumbnail, canAutoExtractThumbnail } from '../utils/thumbnailExtractor'
 import { convertGoogleDriveUrl, isGoogleDriveUrl } from '../utils/googleDriveHelper'
+import IngredientsInput from './IngredientsInput'
 
 interface EditRecipeModalProps {
   recipe: Recipe
@@ -16,6 +17,7 @@ const EditRecipeModal = ({ recipe, onSave, onClose }: EditRecipeModalProps) => {
   const [url, setUrl] = useState(recipe.url)
   const [description, setDescription] = useState(recipe.description)
   const [imageUrl, setImageUrl] = useState(recipe.imageUrl || '')
+  const [ingredients, setIngredients] = useState<Ingredient[]>(recipe.ingredients || [])
   const [showThumbnailHelp, setShowThumbnailHelp] = useState(false)
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -33,6 +35,7 @@ const EditRecipeModal = ({ recipe, onSave, onClose }: EditRecipeModalProps) => {
       url: url.trim() || '',
       description: description.trim(),
       imageUrl: imageUrl.trim() || undefined,
+      ingredients,
       platform,
     })
 
@@ -145,6 +148,9 @@ const EditRecipeModal = ({ recipe, onSave, onClose }: EditRecipeModalProps) => {
               className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:outline-none transition-colors resize-none"
             />
           </div>
+
+          {/* Ingredients Input */}
+          <IngredientsInput ingredients={ingredients} onChange={setIngredients} />
 
           {/* Image URL Input */}
           <div>

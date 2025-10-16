@@ -1,13 +1,14 @@
 import { useState, FormEvent, ChangeEvent, useEffect } from 'react'
 import { Plus, X, Sparkles, HelpCircle } from 'lucide-react'
 import clsx from 'clsx'
-import { Recipe } from '../types/recipe'
+import { Recipe, Ingredient } from '../types/recipe'
 import { detectPlatform } from '../utils/platformDetector'
 import { extractYouTubeThumbnail, canAutoExtractThumbnail } from '../utils/thumbnailExtractor'
 import { convertGoogleDriveUrl, isGoogleDriveUrl } from '../utils/googleDriveHelper'
+import IngredientsInput from './IngredientsInput'
 
 interface AddRecipeFormProps {
-  onAdd: (recipe: Omit<Recipe, 'id' | 'createdAt' | 'comments'>) => void
+  onAdd: (recipe: Omit<Recipe, 'id' | 'createdAt' | 'comments' | 'ingredients'> & { ingredients?: Ingredient[] }) => void
 }
 
 const AddRecipeForm = ({ onAdd }: AddRecipeFormProps) => {
@@ -16,6 +17,7 @@ const AddRecipeForm = ({ onAdd }: AddRecipeFormProps) => {
   const [url, setUrl] = useState('')
   const [description, setDescription] = useState('')
   const [imageUrl, setImageUrl] = useState('')
+  const [ingredients, setIngredients] = useState<Ingredient[]>([])
   const [showThumbnailHelp, setShowThumbnailHelp] = useState(false)
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -33,6 +35,7 @@ const AddRecipeForm = ({ onAdd }: AddRecipeFormProps) => {
       url: url.trim() || '',
       description: description.trim(),
       imageUrl: imageUrl.trim() || undefined,
+      ingredients,
       platform,
     })
 
@@ -41,6 +44,7 @@ const AddRecipeForm = ({ onAdd }: AddRecipeFormProps) => {
     setUrl('')
     setDescription('')
     setImageUrl('')
+    setIngredients([])
     setIsOpen(false)
   }
 
@@ -178,6 +182,9 @@ const AddRecipeForm = ({ onAdd }: AddRecipeFormProps) => {
             className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:outline-none transition-colors resize-none"
           />
         </div>
+
+        {/* Ingredients Input */}
+        <IngredientsInput ingredients={ingredients} onChange={setIngredients} />
 
         {/* Image URL Input */}
         <div>

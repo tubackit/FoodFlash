@@ -1,9 +1,11 @@
-import { Youtube, Instagram, Facebook, Music, ExternalLink, Trash2, Globe, StickyNote, Save, MessageCircle, Send, Edit } from 'lucide-react'
+import { Youtube, Instagram, Facebook, Music, ExternalLink, Trash2, Globe, StickyNote, Save, MessageCircle, Send, Edit, ShoppingCart } from 'lucide-react'
 import clsx from 'clsx'
 import { Recipe, Platform, Comment } from '../types/recipe'
 import { useState, ChangeEvent, FormEvent } from 'react'
 import StarRating from './StarRating'
 import EditRecipeModal from './EditRecipeModal'
+import { useShoppingList } from '../hooks/useShoppingList'
+import { detectIngredientCategory } from '../utils/ingredientCategoryDetector'
 
 interface RecipeCardProps {
   recipe: Recipe
@@ -28,6 +30,7 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
   const [showComments, setShowComments] = useState(false)
   const [commentText, setCommentText] = useState('')
   const [showEditModal, setShowEditModal] = useState(false)
+  const { addItem } = useShoppingList()
 
   const handleDelete = () => {
     if (confirm(`Möchtest du "${recipe.title}" wirklich löschen?`)) {
@@ -96,6 +99,22 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
   const handleSaveEdit = (id: string, updates: Partial<Recipe>) => {
     onUpdate(id, updates)
     setShowEditModal(false)
+  }
+
+  const handleAddToShoppingList = () => {
+    if (recipe.ingredients.length === 0) {
+      alert('Dieses Rezept hat keine Zutaten!')
+      return
+    }
+
+    let addedCount = 0
+    recipe.ingredients.forEach((ingredient) => {
+      const category = detectIngredientCategory(ingredient.name)
+      addItem(ingredient.name, category, ingredient.quantity)
+      addedCount++
+    })
+
+    alert(`✅ ${addedCount} ${addedCount === 1 ? 'Zutat' : 'Zutaten'} zur Einkaufsliste hinzugefügt!`)
   }
 
   return (
@@ -177,6 +196,34 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
             size="lg"
           />
         </div>
+
+        {/* Ingredients Section */}
+        {recipe.ingredients && recipe.ingredients.length > 0 && (
+          <div className="mb-4 pb-4 border-b border-gray-200">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm font-medium text-gray-700">Zutaten ({recipe.ingredients.length})</span>
+              <button
+                onClick={handleAddToShoppingList}
+                data-test-id={`add-ingredients-to-list-${recipe.id}`}
+                aria-label="Zutaten zur Einkaufsliste hinzufügen"
+                className="flex items-center gap-1 text-xs font-medium text-primary-500 hover:text-primary-600 transition-colors"
+              >
+                <ShoppingCart className="h-3 w-3" />
+                Zur Einkaufsliste
+              </button>
+            </div>
+            <div className="space-y-1 max-h-32 overflow-y-auto">
+              {recipe.ingredients.map((ingredient, idx) => (
+                <div key={idx} className="text-sm text-gray-700 bg-gray-50 rounded px-2 py-1 flex justify-between">
+                  <span>{ingredient.name}</span>
+                  {ingredient.quantity && (
+                    <span className="text-gray-500 text-xs">{ingredient.quantity}</span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Notes Section */}
         <div className="mb-4">

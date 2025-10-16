@@ -10,10 +10,11 @@ const loadRecipes = (): Recipe[] => {
     if (!stored) return []
     
     const recipes = JSON.parse(stored) as Recipe[]
-    // Migrate old recipes without comments array
+    // Migrate old recipes without comments/ingredients array
     return recipes.map(recipe => ({
       ...recipe,
-      comments: recipe.comments || []
+      comments: recipe.comments || [],
+      ingredients: recipe.ingredients || []
     }))
   } catch (error) {
     console.error('Error loading recipes:', error)
@@ -29,7 +30,7 @@ export const useRecipes = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(recipes))
   }, [recipes])
 
-  const addRecipe = (recipe: Omit<Recipe, 'id' | 'createdAt' | 'comments'> | Recipe) => {
+  const addRecipe = (recipe: Omit<Recipe, 'id' | 'createdAt' | 'comments' | 'ingredients'> | Recipe) => {
     // Check if it's already a complete recipe (from import)
     const isCompleteRecipe = 'id' in recipe && 'createdAt' in recipe && 'comments' in recipe
     
@@ -40,6 +41,7 @@ export const useRecipes = () => {
           id: crypto.randomUUID(),
           createdAt: new Date().toISOString(),
           comments: [],
+          ingredients: 'ingredients' in recipe ? recipe.ingredients : [],
         }
     
     setRecipes((prev) => [newRecipe, ...prev])

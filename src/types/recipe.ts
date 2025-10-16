@@ -6,6 +6,11 @@ export interface Comment {
   createdAt: string
 }
 
+export interface Ingredient {
+  name: string
+  quantity?: string
+}
+
 export interface Recipe {
   id: string
   title: string
@@ -14,6 +19,7 @@ export interface Recipe {
   description: string
   imageUrl?: string
   notes?: string
+  ingredients: Ingredient[]
   rating?: number // 1-5 stars
   comments: Comment[]
   createdAt: string
