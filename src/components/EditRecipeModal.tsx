@@ -1,6 +1,5 @@
 import { useState, FormEvent, ChangeEvent, useEffect } from 'react'
 import { X, Save, Sparkles, HelpCircle } from 'lucide-react'
-import clsx from 'clsx'
 import { Recipe } from '../types/recipe'
 import { detectPlatform } from '../utils/platformDetector'
 import { extractYouTubeThumbnail, canAutoExtractThumbnail } from '../utils/thumbnailExtractor'
