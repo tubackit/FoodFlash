@@ -1,0 +1,11 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Specific files
+*.md text
+*.json text
+*.ts text
+*.tsx text
+*.css text
+*.html text
+
