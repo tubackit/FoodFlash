@@ -1,8 +1,9 @@
-import { Youtube, Instagram, Facebook, Music, ExternalLink, Trash2, Globe, StickyNote, Save, MessageCircle, Send } from 'lucide-react'
+import { Youtube, Instagram, Facebook, Music, ExternalLink, Trash2, Globe, StickyNote, Save, MessageCircle, Send, Edit } from 'lucide-react'
 import clsx from 'clsx'
 import { Recipe, Platform, Comment } from '../types/recipe'
 import { useState, ChangeEvent, FormEvent } from 'react'
 import StarRating from './StarRating'
+import EditRecipeModal from './EditRecipeModal'
 
 interface RecipeCardProps {
   recipe: Recipe
@@ -26,6 +27,7 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
   const [notesValue, setNotesValue] = useState(recipe.notes || '')
   const [showComments, setShowComments] = useState(false)
   const [commentText, setCommentText] = useState('')
+  const [showEditModal, setShowEditModal] = useState(false)
 
   const handleDelete = () => {
     if (confirm(`Möchtest du "${recipe.title}" wirklich löschen?`)) {
@@ -83,8 +85,30 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
     setShowComments(!showComments)
   }
 
+  const handleOpenEditModal = () => {
+    setShowEditModal(true)
+  }
+
+  const handleCloseEditModal = () => {
+    setShowEditModal(false)
+  }
+
+  const handleSaveEdit = (id: string, updates: Partial<Recipe>) => {
+    onUpdate(id, updates)
+    setShowEditModal(false)
+  }
+
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 border-2 border-gray-100">
+    <>
+      {showEditModal && (
+        <EditRecipeModal
+          recipe={recipe}
+          onSave={handleSaveEdit}
+          onClose={handleCloseEditModal}
+        />
+      )}
+      
+      <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 border-2 border-gray-100">
       {/* Image */}
       {recipe.imageUrl ? (
         <div className="h-48 overflow-hidden bg-gradient-to-br from-primary-100 to-secondary-100">
@@ -106,12 +130,20 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
 
       {/* Content */}
       <div className="p-5">
-        {/* Platform Badge */}
-        <div className="flex items-center gap-2 mb-3">
+        {/* Platform Badge & Edit Button */}
+        <div className="flex items-center justify-between mb-3">
           <div className={clsx('inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium border-2', config.color)}>
             <Icon className="h-4 w-4" />
             {config.label}
           </div>
+          <button
+            onClick={handleOpenEditModal}
+            data-test-id={`edit-recipe-${recipe.id}`}
+            aria-label={`Rezept ${recipe.title} bearbeiten`}
+            className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-gray-500 hover:text-primary-600"
+          >
+            <Edit className="h-4 w-4" />
+          </button>
         </div>
 
         {/* Title */}
@@ -304,6 +336,7 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
         </div>
       </div>
     </div>
+    </>
   )
 }
 

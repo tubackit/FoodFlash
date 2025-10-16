@@ -206,8 +206,8 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
       </div>
 
       {/* Export/Import Buttons */}
-      {recipes.length > 0 && (
-        <div className="flex flex-wrap gap-3 mb-6 justify-center">
+      <div className="flex flex-wrap gap-3 mb-6 justify-center">
+        {recipes.length > 0 && (
           <button
             onClick={handleExport}
             data-test-id="export-recipes"
@@ -217,26 +217,26 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
             <Download className="h-5 w-5" />
             Exportieren
           </button>
-          <button
-            onClick={handleImportClick}
-            data-test-id="import-recipes"
-            aria-label="Rezepte importieren"
-            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-secondary-500 to-secondary-600 text-white rounded-lg font-medium hover:shadow-lg transition-all duration-200 hover:scale-105"
-          >
-            <Upload className="h-5 w-5" />
-            Datei
-          </button>
-          <button
-            onClick={handleOpenGistDialog}
-            data-test-id="load-from-gist"
-            aria-label="Von GitHub Gist laden"
-            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg font-medium hover:shadow-lg transition-all duration-200 hover:scale-105"
-          >
-            <Cloud className="h-5 w-5" />
-            Gist-Cloud
-          </button>
-        </div>
-      )}
+        )}
+        <button
+          onClick={handleImportClick}
+          data-test-id="import-recipes"
+          aria-label="Rezepte importieren"
+          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-secondary-500 to-secondary-600 text-white rounded-lg font-medium hover:shadow-lg transition-all duration-200 hover:scale-105"
+        >
+          <Upload className="h-5 w-5" />
+          Datei
+        </button>
+        <button
+          onClick={handleOpenGistDialog}
+          data-test-id="load-from-gist"
+          aria-label="Von GitHub Gist laden"
+          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg font-medium hover:shadow-lg transition-all duration-200 hover:scale-105"
+        >
+          <Cloud className="h-5 w-5" />
+          Gist-Cloud
+        </button>
+      </div>
 
       {/* Import Dialog */}
       {showImportDialog && (
