@@ -40,7 +40,8 @@ npm run build
 - 🖼️ Optionale Bilder (YouTube Auto-Fill, Google Drive Support)
 - 🎨 Automatische Plattform-Erkennung mit passenden Icons
 - 📤📥 **Export/Import**: Rezepte mit Familie teilen
-- ☁️ **GitHub Gist Sync**: Cloud-Speicher für Familie (NEU!)
+- ☁️ **GitHub Gist Sync**: Cloud-Speicher für Familie
+- 🔄 **Familie-Sync-Button**: 1-Klick-Update von fester Gist-URL (NEU!)
 
 ### ✅ Wochenplaner
 - 📅 7-Tage-Übersicht (Montag - Sonntag)
@@ -54,6 +55,7 @@ npm run build
 - 🏪 Sortiert nach Supermarkt-Reihenfolge (wie bei Lidl)
 - ✅ Abhaken von gekauften Artikeln
 - 🗂️ 10 Kategorien: Obst/Gemüse → Brot → Fleisch → Aufschnitt → Käse/Milch → Getränke → Vorräte → Snacks → Tiefkühlware → Haushalt
+- 📋 **Per WhatsApp teilen** - kopieren oder direkt senden (NEU!)
 - 🧹 Abgehakte oder alle Artikel löschen
 
 ### ✅ Design
@@ -108,6 +110,16 @@ npm run build
    - Familie lädt von einer URL
    - Kostenlos & einfach!
 
+9. **Familie-Sync-Button** ✅
+   - Feste Gist-URL konfiguriert
+   - 1-Klick-Update für Familie
+   - Zeigt letzten Sync-Zeitpunkt
+
+10. **Einkaufsliste teilen** ✅
+   - WhatsApp-Integration
+   - Kopieren in Zwischenablage
+   - Formatiert nach Kategorien
+
 ## 🛠️ Technologie-Stack
 
 - React 18
@@ -140,6 +152,7 @@ npm run build
 - 🚀 [DEPLOYMENT.md](./DEPLOYMENT.md) - Deployment auf GitHub Pages
 - ☁️ [GIST-GUIDE.md](./GIST-GUIDE.md) - Familien-Cloud mit GitHub Gist
 - 👨‍👩‍👧‍👦 [SHARING.md](./SHARING.md) - Rezepte teilen & Export/Import
+- ⚙️ [FAMILY-CONFIG.md](./FAMILY-CONFIG.md) - Familie-Sync Konfiguration (WICHTIG!)
 
 ## 🎯 Zukünftige Erweiterungen
 
