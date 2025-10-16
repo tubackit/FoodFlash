@@ -3,12 +3,14 @@ import AddRecipeForm from './AddRecipeForm'
 import RecipeCard from './RecipeCard'
 import SearchBar from './SearchBar'
 import FamilySyncButton from './FamilySyncButton'
-import { BookOpen, X, Download, Upload, FileJson, Cloud } from 'lucide-react'
+import YouTubeSearch from './YouTubeSearch'
+import { BookOpen, X, Download, Upload, FileJson, Cloud, Youtube } from 'lucide-react'
 import { useState, useMemo, useRef, ChangeEvent } from 'react'
 import { Platform, Recipe } from '../types/recipe'
 import { exportRecipes, importRecipes } from '../utils/exportImport'
 import { loadFromGist, validateGistUrl } from '../utils/gistSync'
 import { SHOW_SYNC_BUTTON } from '../config/gist'
+import { YouTubeVideo } from '../services/youtube'
 import clsx from 'clsx'
 
 interface RecipeListProps {
@@ -26,6 +28,7 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
   const [gistUrl, setGistUrl] = useState('')
   const [gistLoading, setGistLoading] = useState(false)
   const [saveGistUrl, setSaveGistUrl] = useState(true)
+  const [showYouTubeSearch, setShowYouTubeSearch] = useState(false)
 
   // Filter recipes based on search term AND platform filter
   const filteredRecipes = useMemo(() => {
@@ -177,6 +180,26 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
     newRecipes.forEach(recipe => addRecipe(recipe))
   }
 
+  const handleOpenYouTubeSearch = () => {
+    setShowYouTubeSearch(true)
+  }
+
+  const handleCloseYouTubeSearch = () => {
+    setShowYouTubeSearch(false)
+  }
+
+  const handleYouTubeVideoSelect = (video: YouTubeVideo) => {
+    // Auto-fill recipe with YouTube video data
+    addRecipe({
+      title: video.title,
+      url: video.url,
+      description: video.description.slice(0, 200), // Limit description
+      imageUrl: video.thumbnail,
+      platform: 'youtube',
+    })
+    setShowYouTubeSearch(false)
+  }
+
   return (
     <div className="max-w-6xl mx-auto">
       {/* Header */}
@@ -219,6 +242,27 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
         <div className="mb-6">
           <FamilySyncButton onSync={handleFamilySync} mode="merge" />
         </div>
+      )}
+
+      {/* YouTube Search Button */}
+      <div className="mb-6">
+        <button
+          onClick={handleOpenYouTubeSearch}
+          data-test-id="youtube-search"
+          aria-label="Auf YouTube nach Rezepten suchen"
+          className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 flex items-center justify-center gap-3 font-bold text-lg"
+        >
+          <Youtube className="h-6 w-6" />
+          Rezept auf YouTube suchen
+        </button>
+      </div>
+
+      {/* YouTube Search Modal */}
+      {showYouTubeSearch && (
+        <YouTubeSearch
+          onSelect={handleYouTubeVideoSelect}
+          onClose={handleCloseYouTubeSearch}
+        />
       )}
 
       {/* Export/Import Buttons */}

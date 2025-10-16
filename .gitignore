@@ -23,10 +23,11 @@ dist-ssr
 *.sln
 *.sw?
 
-# Environment variables
+# Environment variables (WICHTIG: .env nicht committen!)
 .env
 .env.local
 .env.*.local
+.env.production
 
 # Test exports (optional - entferne # wenn du Exports nicht commiten willst)
 # foodflash-export-*.json
