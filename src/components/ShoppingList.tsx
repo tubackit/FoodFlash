@@ -1,7 +1,8 @@
 import { useState, FormEvent, ChangeEvent } from 'react'
-import { ShoppingCart, Plus, Trash2, CheckCircle2, Circle, X } from 'lucide-react'
+import { ShoppingCart, Plus, Trash2, CheckCircle2, Circle, X, Share2, Copy } from 'lucide-react'
 import { useShoppingList } from '../hooks/useShoppingList'
 import { ShoppingCategory } from '../types/shopping'
+import { formatShoppingListForWhatsApp } from '../utils/shoppingListFormatter'
 import clsx from 'clsx'
 
 const categories: { key: ShoppingCategory; label: string; emoji: string }[] = [
@@ -64,6 +65,31 @@ const ShoppingList = () => {
     if (confirm('Möchtest du die gesamte Einkaufsliste löschen?')) {
       clearAll()
     }
+  }
+
+  const handleCopyToClipboard = async () => {
+    const text = formatShoppingListForWhatsApp(items)
+    
+    try {
+      await navigator.clipboard.writeText(text)
+      alert('✅ Einkaufsliste in Zwischenablage kopiert!')
+    } catch (error) {
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea')
+      textArea.value = text
+      document.body.appendChild(textArea)
+      textArea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textArea)
+      alert('✅ Einkaufsliste kopiert!')
+    }
+  }
+
+  const handleShareViaWhatsApp = () => {
+    const text = formatShoppingListForWhatsApp(items)
+    const encodedText = encodeURIComponent(text)
+    const whatsappUrl = `https://wa.me/?text=${encodedText}`
+    window.open(whatsappUrl, '_blank')
   }
 
   // Group items by category
@@ -190,25 +216,50 @@ const ShoppingList = () => {
 
       {/* Action Buttons */}
       {items.length > 0 && (
-        <div className="flex gap-3 mb-6">
-          {checkedCount > 0 && (
+        <div className="space-y-3 mb-6">
+          {/* Share Buttons */}
+          <div className="flex gap-3">
             <button
-              onClick={handleClearChecked}
-              data-test-id="clear-checked"
-              aria-label="Abgehakte Artikel löschen"
-              className="flex-1 py-2 px-4 bg-accent-100 text-accent-700 rounded-lg font-medium hover:bg-accent-200 transition-colors text-sm"
+              onClick={handleCopyToClipboard}
+              data-test-id="copy-shopping-list"
+              aria-label="Einkaufsliste kopieren"
+              className="flex-1 py-3 px-4 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-lg font-medium hover:shadow-lg transition-all duration-200 hover:scale-105 flex items-center justify-center gap-2"
             >
-              Abgehakte löschen ({checkedCount})
+              <Copy className="h-5 w-5" />
+              Kopieren
             </button>
-          )}
-          <button
-            onClick={handleClearAll}
-            data-test-id="clear-all"
-            aria-label="Alle Artikel löschen"
-            className="py-2 px-4 bg-red-100 text-red-600 rounded-lg font-medium hover:bg-red-200 transition-colors text-sm"
-          >
-            Alle löschen
-          </button>
+            <button
+              onClick={handleShareViaWhatsApp}
+              data-test-id="share-whatsapp"
+              aria-label="Per WhatsApp teilen"
+              className="flex-1 py-3 px-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg font-medium hover:shadow-lg transition-all duration-200 hover:scale-105 flex items-center justify-center gap-2"
+            >
+              <Share2 className="h-5 w-5" />
+              WhatsApp
+            </button>
+          </div>
+
+          {/* Management Buttons */}
+          <div className="flex gap-3">
+            {checkedCount > 0 && (
+              <button
+                onClick={handleClearChecked}
+                data-test-id="clear-checked"
+                aria-label="Abgehakte Artikel löschen"
+                className="flex-1 py-2 px-4 bg-accent-100 text-accent-700 rounded-lg font-medium hover:bg-accent-200 transition-colors text-sm"
+              >
+                Abgehakte löschen ({checkedCount})
+              </button>
+            )}
+            <button
+              onClick={handleClearAll}
+              data-test-id="clear-all"
+              aria-label="Alle Artikel löschen"
+              className="py-2 px-4 bg-red-100 text-red-600 rounded-lg font-medium hover:bg-red-200 transition-colors text-sm"
+            >
+              Alle löschen
+            </button>
+          </div>
         </div>
       )}
 
