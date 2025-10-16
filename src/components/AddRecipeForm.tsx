@@ -7,7 +7,7 @@ import { extractYouTubeThumbnail, canAutoExtractThumbnail } from '../utils/thumb
 import { convertGoogleDriveUrl, isGoogleDriveUrl } from '../utils/googleDriveHelper'
 
 interface AddRecipeFormProps {
-  onAdd: (recipe: Omit<Recipe, 'id' | 'createdAt'>) => void
+  onAdd: (recipe: Omit<Recipe, 'id' | 'createdAt' | 'comments'>) => void
 }
 
 const AddRecipeForm = ({ onAdd }: AddRecipeFormProps) => {
