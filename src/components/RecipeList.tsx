@@ -2,11 +2,13 @@ import { useRecipes } from '../hooks/useRecipes'
 import AddRecipeForm from './AddRecipeForm'
 import RecipeCard from './RecipeCard'
 import SearchBar from './SearchBar'
+import FamilySyncButton from './FamilySyncButton'
 import { BookOpen, X, Download, Upload, FileJson, Cloud } from 'lucide-react'
 import { useState, useMemo, useRef, ChangeEvent } from 'react'
-import { Platform } from '../types/recipe'
+import { Platform, Recipe } from '../types/recipe'
 import { exportRecipes, importRecipes } from '../utils/exportImport'
 import { loadFromGist, validateGistUrl } from '../utils/gistSync'
+import { SHOW_SYNC_BUTTON } from '../config/gist'
 import clsx from 'clsx'
 
 interface RecipeListProps {
@@ -168,6 +170,13 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
     alert('✅ Gespeicherte Gist-URL wurde gelöscht')
   }
 
+  const handleFamilySync = (familyRecipes: Recipe[]) => {
+    // Add recipes from family gist
+    const existingUrls = new Set(recipes.map(r => r.url))
+    const newRecipes = familyRecipes.filter(r => !existingUrls.has(r.url))
+    newRecipes.forEach(recipe => addRecipe(recipe))
+  }
+
   return (
     <div className="max-w-6xl mx-auto">
       {/* Header */}
@@ -204,6 +213,13 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
       <div className="mb-8">
         <AddRecipeForm onAdd={addRecipe} />
       </div>
+
+      {/* Family Sync Button */}
+      {SHOW_SYNC_BUTTON && (
+        <div className="mb-6">
+          <FamilySyncButton onSync={handleFamilySync} mode="merge" />
+        </div>
+      )}
 
       {/* Export/Import Buttons */}
       <div className="flex flex-wrap gap-3 mb-6 justify-center">
