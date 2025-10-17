@@ -14,8 +14,12 @@ const YouTubeSearch = ({ onSelect, onClose }: YouTubeSearchProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   
-  // Check if we're in development mode (localhost) and have API key
-  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  // Check if we're in development mode (localhost or local network) and have API key
+  const isLocal = window.location.hostname === 'localhost' || 
+                  window.location.hostname === '127.0.0.1' ||
+                  window.location.hostname.startsWith('192.168.') ||
+                  window.location.hostname.startsWith('10.') ||
+                  window.location.hostname.endsWith('.local')
   const hasApiKey = (import.meta as any).env?.VITE_YOUTUBE_API_KEY
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
