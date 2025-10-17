@@ -123,9 +123,9 @@ const WeekPlanner = () => {
                         return (
                           <div
                             key={`${meal.recipeId}-${idx}`}
-                            className="bg-gradient-to-r from-primary-50 to-secondary-50 rounded-lg p-2 text-xs group relative"
+                            className="bg-gradient-to-r from-primary-600/30 to-secondary-600/30 rounded-lg p-2 text-xs group relative border border-primary-500/20"
                           >
-                            <p className="font-medium text-gray-200 pr-6 line-clamp-2">
+                            <p className="font-medium text-gray-100 pr-6 line-clamp-2">
                               {recipe.title}
                             </p>
                             <button
