@@ -285,7 +285,7 @@ const ShoppingList = () => {
                       key={item.id}
                       className={clsx(
                         'flex items-center gap-3 p-3 rounded-lg transition-all duration-200 group',
-                        item.checked ? 'bg-gray-50' : 'bg-primary-50 hover:bg-primary-100'
+                        item.checked ? 'bg-slate-600/30' : 'bg-slate-600/50 hover:bg-slate-500/50'
                       )}
                     >
                       <button
