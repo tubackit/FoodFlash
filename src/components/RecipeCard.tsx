@@ -14,12 +14,12 @@ interface RecipeCardProps {
 }
 
 const platformConfig: Record<Platform, { icon: typeof Youtube; color: string; label: string }> = {
-  youtube: { icon: Youtube, color: 'bg-red-100 text-red-600 border-red-200', label: 'YouTube' },
-  instagram: { icon: Instagram, color: 'bg-pink-100 text-pink-600 border-pink-200', label: 'Instagram' },
-  facebook: { icon: Facebook, color: 'bg-blue-100 text-blue-600 border-blue-200', label: 'Facebook' },
-  tiktok: { icon: Music, color: 'bg-gray-100 text-gray-800 border-gray-200', label: 'TikTok' },
-  own: { icon: StickyNote, color: 'bg-green-100 text-green-600 border-green-200', label: 'Eigenes Rezept' },
-  other: { icon: Globe, color: 'bg-purple-100 text-purple-600 border-purple-200', label: 'Andere' },
+  youtube: { icon: Youtube, color: 'bg-red-600/20 text-red-400 border-red-500/30', label: 'YouTube' },
+  instagram: { icon: Instagram, color: 'bg-pink-600/20 text-pink-400 border-pink-500/30', label: 'Instagram' },
+  facebook: { icon: Facebook, color: 'bg-blue-600/20 text-blue-400 border-blue-500/30', label: 'Facebook' },
+  tiktok: { icon: Music, color: 'bg-gray-600/20 text-gray-400 border-gray-500/30', label: 'TikTok' },
+  own: { icon: StickyNote, color: 'bg-secondary-600/20 text-secondary-400 border-secondary-500/30', label: 'Eigenes Rezept' },
+  other: { icon: Globe, color: 'bg-accent-600/20 text-accent-400 border-accent-500/30', label: 'Andere' },
 }
 
 const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
@@ -132,7 +132,7 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
         />
       )}
       
-      <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-200 border-2 border-gray-100">
+      <div className="bg-dark-800/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-dark-600/50 hover:border-primary-500/30 hover:autumn-glow">
       {/* Image - Always visible */}
       <button
         onClick={handleToggleExpand}
@@ -176,7 +176,7 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
             onClick={handleOpenEditModal}
             data-test-id={`edit-recipe-${recipe.id}`}
             aria-label={`Rezept ${recipe.title} bearbeiten`}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-gray-500 hover:text-primary-600"
+            className="p-2 hover:bg-dark-700/50 rounded-lg transition-colors text-gray-400 hover:text-primary-400"
           >
             <Edit className="h-4 w-4" />
           </button>
@@ -187,7 +187,7 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
           onClick={handleToggleExpand}
           className="w-full text-left mb-3"
         >
-          <h3 className="text-xl font-bold text-gray-800 line-clamp-2 hover:text-primary-600 transition-colors">
+          <h3 className="text-xl font-bold text-gray-100 line-clamp-2 hover:text-primary-400 transition-colors">
             {recipe.title}
           </h3>
         </button>
@@ -197,22 +197,22 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
           <div className="space-y-4 animate-in fade-in slide-in-from-top-2 duration-200">
             {/* Description */}
             {recipe.description && (
-              <p className="text-gray-600 text-sm">
+              <p className="text-gray-300 text-sm">
                 {recipe.description}
               </p>
             )}
 
             {/* Date */}
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-gray-500">
               Hinzugefügt: {new Date(recipe.createdAt).toLocaleDateString('de-DE')}
             </p>
 
             {/* Rating Section */}
-        <div className="mb-4 pb-4 border-b border-gray-200">
+        <div className="mb-4 pb-4 border-b border-dark-600/50">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-gray-700">Bewertung</span>
+            <span className="text-sm font-medium text-gray-200">Bewertung</span>
             {recipe.rating && (
-              <span className="text-xs text-gray-500">{recipe.rating}/5</span>
+              <span className="text-xs text-gray-400">{recipe.rating}/5</span>
             )}
           </div>
               <StarRating
@@ -224,9 +224,9 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
 
                 {/* Ingredients Section */}
             {recipe.ingredients && recipe.ingredients.length > 0 && (
-              <div className="pb-4 border-b border-gray-200">
+              <div className="pb-4 border-b border-dark-600/50">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-gray-700">Zutaten ({recipe.ingredients.length})</span>
+                  <span className="text-sm font-medium text-gray-200">Zutaten ({recipe.ingredients.length})</span>
                   <button
                     onClick={handleAddToShoppingList}
                     data-test-id={`add-ingredients-to-list-${recipe.id}`}
@@ -239,10 +239,10 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
                 </div>
                 <div className="space-y-1 max-h-32 overflow-y-auto">
                   {recipe.ingredients.map((ingredient, idx) => (
-                    <div key={idx} className="text-sm text-gray-700 bg-gray-50 rounded px-2 py-1 flex justify-between">
+                    <div key={idx} className="text-sm text-gray-200 bg-dark-700/50 rounded px-2 py-1 flex justify-between">
                       <span>{ingredient.name}</span>
                       {ingredient.quantity && (
-                        <span className="text-gray-500 text-xs">{ingredient.quantity}</span>
+                        <span className="text-gray-400 text-xs">{ingredient.quantity}</span>
                       )}
                     </div>
                   ))}
@@ -253,7 +253,7 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
             {/* Notes Section */}
             <div>
               <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                <div className="flex items-center gap-2 text-sm font-medium text-gray-200">
                   <StickyNote className="h-4 w-4 text-accent-500" />
                   Notizen
                 </div>
@@ -292,9 +292,9 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
                   </button>
                 </div>
               ) : (
-                <div className="text-sm text-gray-600 bg-gray-50 rounded-lg p-3 min-h-[60px]">
+                <div className="text-sm text-gray-300 bg-dark-700/50 rounded-lg p-3 min-h-[60px]">
                   {recipe.notes || (
-                    <span className="text-gray-400 italic">Keine Notizen vorhanden</span>
+                    <span className="text-gray-500 italic">Keine Notizen vorhanden</span>
                   )}
                 </div>
               )}
@@ -306,7 +306,7 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
                 onClick={handleToggleComments}
                 data-test-id={`toggle-comments-${recipe.id}`}
                 aria-label={showComments ? 'Kommentare ausblenden' : 'Kommentare anzeigen'}
-                className="flex items-center justify-between w-full text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                className="flex items-center justify-between w-full text-sm font-medium text-gray-200 hover:text-gray-100 transition-colors"
               >
                 <div className="flex items-center gap-2">
                   <MessageCircle className="h-4 w-4 text-secondary-500" />
@@ -330,10 +330,10 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
                       {recipe.comments.map((comment) => (
                         <div
                           key={comment.id}
-                          className="bg-gray-50 rounded-lg p-3 text-sm"
+                          className="bg-dark-700/50 rounded-lg p-3 text-sm"
                         >
-                          <p className="text-gray-700">{comment.text}</p>
-                          <p className="text-xs text-gray-400 mt-1">
+                          <p className="text-gray-200">{comment.text}</p>
+                          <p className="text-xs text-gray-500 mt-1">
                             {new Date(comment.createdAt).toLocaleDateString('de-DE', {
                               day: '2-digit',
                               month: '2-digit',
@@ -367,7 +367,7 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
                         'px-3 py-2 rounded-lg transition-all duration-200',
                         commentText.trim()
                           ? 'bg-secondary-500 text-white hover:bg-secondary-600'
-                          : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                          : 'bg-dark-600/50 text-gray-500 cursor-not-allowed'
                       )}
                     >
                       <Send className="h-4 w-4" />
@@ -412,7 +412,7 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
               onClick={handleToggleExpand}
               data-test-id={`collapse-recipe-${recipe.id}`}
               aria-label="Details ausblenden"
-              className="w-full mt-4 py-2 text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors border-t border-gray-100 pt-4"
+              className="w-full mt-4 py-2 text-sm font-medium text-gray-400 hover:text-primary-400 transition-colors border-t border-dark-600/50 pt-4"
             >
               ▲ Weniger anzeigen
             </button>
@@ -421,8 +421,8 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
 
         {/* Compact view - Quick info bar */}
         {!isExpanded && (
-          <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-            <div className="flex items-center gap-3 text-xs text-gray-500">
+          <div className="flex items-center justify-between pt-3 border-t border-dark-600/50">
+            <div className="flex items-center gap-3 text-xs text-gray-400">
               {recipe.rating && (
                 <span className="flex items-center gap-1">
                   ⭐ {recipe.rating}/5

@@ -89,7 +89,7 @@ const WeekPlanner = () => {
           return (
             <div
               key={weekDay.key}
-              className="bg-white rounded-2xl p-4 shadow-lg border-2 border-gray-100"
+              className="bg-dark-700/50 backdrop-blur-sm rounded-2xl p-4 shadow-lg border-2 border-dark-600/50"
             >
               {/* Day Header */}
               <div className="flex items-center justify-between mb-3 pb-2 border-b-2 border-gray-100">
@@ -132,7 +132,7 @@ const WeekPlanner = () => {
                               onClick={() => handleRemoveMeal(weekDay.key, meal.recipeId, meal.mealType)}
                               data-test-id={`remove-meal-${weekDay.key}-${meal.recipeId}`}
                               aria-label={`${recipe.title} entfernen`}
-                              className="absolute top-1 right-1 p-1 bg-white rounded opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-50 text-red-500"
+                              className="absolute top-1 right-1 p-1 bg-dark-800 rounded opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600/20 text-red-400"
                             >
                               <Trash2 className="h-3 w-3" />
                             </button>
@@ -166,7 +166,7 @@ const WeekPlanner = () => {
 
       {/* Recipe Selection Modal */}
       {selectedDay && (
-        <div className="bg-white rounded-2xl p-6 shadow-2xl border-2 border-accent-200">
+        <div className="bg-dark-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-2xl border-2 border-accent-500/30 autumn-glow-gold">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2">
               <ChefHat className="h-6 w-6 text-accent-500" />

@@ -111,9 +111,9 @@ const AddRecipeForm = ({ onAdd }: AddRecipeFormProps) => {
   }
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-xl border-2 border-primary-200">
+    <div className="bg-dark-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border-2 border-primary-500/30 autumn-glow">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+        <h3 className="text-2xl font-bold text-gray-100 flex items-center gap-2">
           <Plus className="h-6 w-6 text-primary-500" />
           Neues Rezept
         </h3>
