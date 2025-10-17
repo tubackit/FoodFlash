@@ -56,12 +56,12 @@ const IngredientsInput = ({ ingredients, onChange }: IngredientsInputProps) => {
           {ingredients.map((ingredient, index) => (
             <div
               key={index}
-              className="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2 group"
+              className="flex items-center gap-2 bg-slate-700 rounded-lg px-3 py-2 group"
             >
-              <span className="flex-1 text-sm text-gray-200">
+              <span className="flex-1 text-sm text-gray-100">
                 {ingredient.name}
                 {ingredient.quantity && (
-                  <span className="text-gray-500 ml-2">({ingredient.quantity})</span>
+                  <span className="text-gray-400 ml-2">({ingredient.quantity})</span>
                 )}
               </span>
               <button
@@ -86,7 +86,7 @@ const IngredientsInput = ({ ingredients, onChange }: IngredientsInputProps) => {
           onChange={handleNameChange}
           onKeyPress={handleKeyPress}
           placeholder="Zutat, z.B. Tomaten"
-          className="flex-1 px-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:outline-none transition-colors"
+          className="flex-1 px-3 py-2 text-sm border-2 border-gray-600 rounded-lg focus:border-primary-500 focus:outline-none transition-colors bg-slate-700 text-gray-100 placeholder-gray-400"
         />
         <input
           type="text"
@@ -94,7 +94,7 @@ const IngredientsInput = ({ ingredients, onChange }: IngredientsInputProps) => {
           onChange={handleQuantityChange}
           onKeyPress={handleKeyPress}
           placeholder="Menge"
-          className="w-24 px-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:outline-none transition-colors"
+          className="w-24 px-3 py-2 text-sm border-2 border-gray-600 rounded-lg focus:border-primary-500 focus:outline-none transition-colors bg-slate-700 text-gray-100 placeholder-gray-400"
         />
         <button
           type="button"
@@ -106,13 +106,13 @@ const IngredientsInput = ({ ingredients, onChange }: IngredientsInputProps) => {
             'px-3 py-2 rounded-lg transition-all duration-200',
             newIngredientName.trim()
               ? 'bg-accent-500 text-white hover:bg-accent-600'
-              : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              : 'bg-slate-600 text-gray-500 cursor-not-allowed'
           )}
         >
           <Plus className="h-4 w-4" />
         </button>
       </div>
-      <p className="text-xs text-gray-500 mt-1">
+      <p className="text-xs text-gray-400 mt-1">
         Enter drücken oder Plus-Button zum Hinzufügen
       </p>
     </div>
