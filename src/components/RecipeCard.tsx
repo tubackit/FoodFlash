@@ -30,6 +30,7 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
   const [showComments, setShowComments] = useState(false)
   const [commentText, setCommentText] = useState('')
   const [showEditModal, setShowEditModal] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false)
   const { addItem } = useShoppingList()
 
   const handleDelete = () => {
@@ -117,6 +118,10 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
     alert(`✅ ${addedCount} ${addedCount === 1 ? 'Zutat' : 'Zutaten'} zur Einkaufsliste hinzugefügt!`)
   }
 
+  const handleToggleExpand = () => {
+    setIsExpanded(!isExpanded)
+  }
+
   return (
     <>
       {showEditModal && (
@@ -127,29 +132,41 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
         />
       )}
       
-      <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 border-2 border-gray-100">
-      {/* Image */}
-      {recipe.imageUrl ? (
-        <div className="h-48 overflow-hidden bg-gradient-to-br from-primary-100 to-secondary-100">
-          <img
-            src={recipe.imageUrl}
-            alt={recipe.title}
-            className="w-full h-full object-cover"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement
-              target.style.display = 'none'
-            }}
-          />
-        </div>
-      ) : (
-        <div className="h-48 bg-gradient-to-br from-primary-100 via-secondary-100 to-accent-100 flex items-center justify-center">
-          <Icon className="h-16 w-16 text-white opacity-50" />
-        </div>
-      )}
+      <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-200 border-2 border-gray-100">
+      {/* Image - Always visible */}
+      <button
+        onClick={handleToggleExpand}
+        className="w-full"
+      >
+        {recipe.imageUrl ? (
+          <div className="h-48 overflow-hidden bg-gradient-to-br from-primary-100 to-secondary-100 relative">
+            <img
+              src={recipe.imageUrl}
+              alt={recipe.title}
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement
+                target.style.display = 'none'
+              }}
+            />
+            {/* Expand indicator */}
+            <div className="absolute bottom-2 right-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded-full">
+              {isExpanded ? '▼ Weniger' : '▶ Mehr'}
+            </div>
+          </div>
+        ) : (
+          <div className="h-48 bg-gradient-to-br from-primary-100 via-secondary-100 to-accent-100 flex items-center justify-center relative">
+            <Icon className="h-16 w-16 text-white opacity-50" />
+            <div className="absolute bottom-2 right-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded-full">
+              {isExpanded ? '▼ Weniger' : '▶ Mehr'}
+            </div>
+          </div>
+        )}
+      </button>
 
       {/* Content */}
       <div className="p-5">
-        {/* Platform Badge & Edit Button */}
+        {/* Always visible: Platform Badge, Title & Expand button */}
         <div className="flex items-center justify-between mb-3">
           <div className={clsx('inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium border-2', config.color)}>
             <Icon className="h-4 w-4" />
@@ -165,24 +182,32 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
           </button>
         </div>
 
-        {/* Title */}
-        <h3 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2">
-          {recipe.title}
-        </h3>
+        {/* Title - Always visible */}
+        <button
+          onClick={handleToggleExpand}
+          className="w-full text-left mb-3"
+        >
+          <h3 className="text-xl font-bold text-gray-800 line-clamp-2 hover:text-primary-600 transition-colors">
+            {recipe.title}
+          </h3>
+        </button>
 
-        {/* Description */}
-        {recipe.description && (
-          <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-            {recipe.description}
-          </p>
-        )}
+        {/* Collapsible content */}
+        {isExpanded && (
+          <div className="space-y-4 animate-in fade-in slide-in-from-top-2 duration-200">
+            {/* Description */}
+            {recipe.description && (
+              <p className="text-gray-600 text-sm">
+                {recipe.description}
+              </p>
+            )}
 
-        {/* Date */}
-        <p className="text-xs text-gray-400 mb-4">
-          Hinzugefügt: {new Date(recipe.createdAt).toLocaleDateString('de-DE')}
-        </p>
+            {/* Date */}
+            <p className="text-xs text-gray-400">
+              Hinzugefügt: {new Date(recipe.createdAt).toLocaleDateString('de-DE')}
+            </p>
 
-        {/* Rating Section */}
+            {/* Rating Section */}
         <div className="mb-4 pb-4 border-b border-gray-200">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm font-medium text-gray-700">Bewertung</span>
@@ -190,197 +215,224 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
               <span className="text-xs text-gray-500">{recipe.rating}/5</span>
             )}
           </div>
-          <StarRating
-            rating={recipe.rating || 0}
-            onRatingChange={handleRatingChange}
-            size="lg"
-          />
-        </div>
-
-        {/* Ingredients Section */}
-        {recipe.ingredients && recipe.ingredients.length > 0 && (
-          <div className="mb-4 pb-4 border-b border-gray-200">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium text-gray-700">Zutaten ({recipe.ingredients.length})</span>
-              <button
-                onClick={handleAddToShoppingList}
-                data-test-id={`add-ingredients-to-list-${recipe.id}`}
-                aria-label="Zutaten zur Einkaufsliste hinzufügen"
-                className="flex items-center gap-1 text-xs font-medium text-primary-500 hover:text-primary-600 transition-colors"
-              >
-                <ShoppingCart className="h-3 w-3" />
-                Zur Einkaufsliste
-              </button>
+              <StarRating
+                rating={recipe.rating || 0}
+                onRatingChange={handleRatingChange}
+                size="lg"
+              />
             </div>
-            <div className="space-y-1 max-h-32 overflow-y-auto">
-              {recipe.ingredients.map((ingredient, idx) => (
-                <div key={idx} className="text-sm text-gray-700 bg-gray-50 rounded px-2 py-1 flex justify-between">
-                  <span>{ingredient.name}</span>
-                  {ingredient.quantity && (
-                    <span className="text-gray-500 text-xs">{ingredient.quantity}</span>
+
+                {/* Ingredients Section */}
+            {recipe.ingredients && recipe.ingredients.length > 0 && (
+              <div className="pb-4 border-b border-gray-200">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-medium text-gray-700">Zutaten ({recipe.ingredients.length})</span>
+                  <button
+                    onClick={handleAddToShoppingList}
+                    data-test-id={`add-ingredients-to-list-${recipe.id}`}
+                    aria-label="Zutaten zur Einkaufsliste hinzufügen"
+                    className="flex items-center gap-1 text-xs font-medium text-primary-500 hover:text-primary-600 transition-colors"
+                  >
+                    <ShoppingCart className="h-3 w-3" />
+                    Zur Einkaufsliste
+                  </button>
+                </div>
+                <div className="space-y-1 max-h-32 overflow-y-auto">
+                  {recipe.ingredients.map((ingredient, idx) => (
+                    <div key={idx} className="text-sm text-gray-700 bg-gray-50 rounded px-2 py-1 flex justify-between">
+                      <span>{ingredient.name}</span>
+                      {ingredient.quantity && (
+                        <span className="text-gray-500 text-xs">{ingredient.quantity}</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Notes Section */}
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                  <StickyNote className="h-4 w-4 text-accent-500" />
+                  Notizen
+                </div>
+                <button
+                  onClick={handleToggleNotes}
+                  data-test-id={`toggle-notes-${recipe.id}`}
+                  aria-label={isEditingNotes ? 'Notizen-Bearbeitung abbrechen' : 'Notizen bearbeiten'}
+                  className="text-xs text-primary-500 hover:text-primary-600 font-medium transition-colors"
+                >
+                  {isEditingNotes ? 'Abbrechen' : 'Bearbeiten'}
+                </button>
+              </div>
+              
+              {isEditingNotes ? (
+                <div className="space-y-2">
+                  <textarea
+                    value={notesValue}
+                    onChange={handleNotesChange}
+                    data-test-id={`notes-input-${recipe.id}`}
+                    aria-label="Notizen bearbeiten"
+                    placeholder="Füge deine Notizen hinzu..."
+                    rows={3}
+                    className="w-full px-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:border-accent-500 focus:outline-none transition-colors resize-none"
+                  />
+                  <button
+                    onClick={handleSaveNotes}
+                    data-test-id={`save-notes-${recipe.id}`}
+                    aria-label="Notizen speichern"
+                    className={clsx(
+                      'w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200',
+                      'bg-accent-500 text-white hover:bg-accent-600'
+                    )}
+                  >
+                    <Save className="h-4 w-4" />
+                    Speichern
+                  </button>
+                </div>
+              ) : (
+                <div className="text-sm text-gray-600 bg-gray-50 rounded-lg p-3 min-h-[60px]">
+                  {recipe.notes || (
+                    <span className="text-gray-400 italic">Keine Notizen vorhanden</span>
                   )}
                 </div>
-              ))}
+              )}
+            </div>
+
+            {/* Comments Section */}
+            <div className="pb-4 border-b border-gray-200">
+              <button
+                onClick={handleToggleComments}
+                data-test-id={`toggle-comments-${recipe.id}`}
+                aria-label={showComments ? 'Kommentare ausblenden' : 'Kommentare anzeigen'}
+                className="flex items-center justify-between w-full text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+              >
+                <div className="flex items-center gap-2">
+                  <MessageCircle className="h-4 w-4 text-secondary-500" />
+                  Kommentare
+                  {recipe.comments.length > 0 && (
+                    <span className="bg-secondary-100 text-secondary-700 text-xs px-2 py-0.5 rounded-full">
+                      {recipe.comments.length}
+                    </span>
+                  )}
+                </div>
+                <span className="text-xs text-primary-500">
+                  {showComments ? 'Ausblenden' : 'Anzeigen'}
+                </span>
+              </button>
+
+              {showComments && (
+                <div className="mt-3 space-y-3">
+                  {/* Comment List */}
+                  {recipe.comments.length > 0 && (
+                    <div className="space-y-2 max-h-40 overflow-y-auto">
+                      {recipe.comments.map((comment) => (
+                        <div
+                          key={comment.id}
+                          className="bg-gray-50 rounded-lg p-3 text-sm"
+                        >
+                          <p className="text-gray-700">{comment.text}</p>
+                          <p className="text-xs text-gray-400 mt-1">
+                            {new Date(comment.createdAt).toLocaleDateString('de-DE', {
+                              day: '2-digit',
+                              month: '2-digit',
+                              year: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit',
+                            })}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Add Comment Form */}
+                  <form onSubmit={handleAddComment} className="flex gap-2">
+                    <input
+                      type="text"
+                      value={commentText}
+                      onChange={handleCommentChange}
+                      data-test-id={`comment-input-${recipe.id}`}
+                      aria-label="Kommentar hinzufügen"
+                      placeholder="Kommentar hinzufügen..."
+                      className="flex-1 px-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:border-secondary-500 focus:outline-none transition-colors"
+                    />
+                    <button
+                      type="submit"
+                      data-test-id={`add-comment-${recipe.id}`}
+                      aria-label="Kommentar senden"
+                      disabled={!commentText.trim()}
+                      className={clsx(
+                        'px-3 py-2 rounded-lg transition-all duration-200',
+                        commentText.trim()
+                          ? 'bg-secondary-500 text-white hover:bg-secondary-600'
+                          : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                      )}
+                    >
+                      <Send className="h-4 w-4" />
+                    </button>
+                  </form>
+                </div>
+              )}
+            </div>
+
+                {/* Actions */}
+            <div className="flex gap-2">
+              {recipe.url && recipe.url.trim() !== '' && (
+                <button
+                  onClick={handleOpenLink}
+                  data-test-id={`open-recipe-${recipe.id}`}
+                  aria-label={`Rezept ${recipe.title} öffnen`}
+                  className={clsx(
+                    'flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200',
+                    'bg-primary-500 text-white hover:bg-primary-600 hover:shadow-md'
+                  )}
+                >
+                  <ExternalLink className="h-4 w-4" />
+                  Öffnen
+                </button>
+              )}
+              <button
+                onClick={handleDelete}
+                data-test-id={`delete-recipe-${recipe.id}`}
+                aria-label={`Rezept ${recipe.title} löschen`}
+                className={clsx(
+                  'px-4 py-2 rounded-lg font-medium transition-all duration-200',
+                  'bg-red-100 text-red-600 hover:bg-red-200',
+                  !recipe.url || recipe.url.trim() === '' ? 'flex-1' : ''
+                )}
+              >
+                <Trash2 className="h-4 w-4" />
+              </button>
             </div>
           </div>
         )}
 
-        {/* Notes Section */}
-        <div className="mb-4">
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-2 text-sm font-medium text-gray-700">
-              <StickyNote className="h-4 w-4 text-accent-500" />
-              Notizen
-            </div>
-            <button
-              onClick={handleToggleNotes}
-              data-test-id={`toggle-notes-${recipe.id}`}
-              aria-label={isEditingNotes ? 'Notizen-Bearbeitung abbrechen' : 'Notizen bearbeiten'}
-              className="text-xs text-primary-500 hover:text-primary-600 font-medium transition-colors"
-            >
-              {isEditingNotes ? 'Abbrechen' : 'Bearbeiten'}
-            </button>
-          </div>
-          
-          {isEditingNotes ? (
-            <div className="space-y-2">
-              <textarea
-                value={notesValue}
-                onChange={handleNotesChange}
-                data-test-id={`notes-input-${recipe.id}`}
-                aria-label="Notizen bearbeiten"
-                placeholder="Füge deine Notizen hinzu..."
-                rows={3}
-                className="w-full px-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:border-accent-500 focus:outline-none transition-colors resize-none"
-              />
-              <button
-                onClick={handleSaveNotes}
-                data-test-id={`save-notes-${recipe.id}`}
-                aria-label="Notizen speichern"
-                className={clsx(
-                  'w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200',
-                  'bg-accent-500 text-white hover:bg-accent-600'
-                )}
-              >
-                <Save className="h-4 w-4" />
-                Speichern
-              </button>
-            </div>
-          ) : (
-            <div className="text-sm text-gray-600 bg-gray-50 rounded-lg p-3 min-h-[60px]">
-              {recipe.notes || (
-                <span className="text-gray-400 italic">Keine Notizen vorhanden</span>
-              )}
-            </div>
-          )}
-        </div>
-
-        {/* Comments Section */}
-        <div className="mb-4 pb-4 border-b border-gray-200">
-          <button
-            onClick={handleToggleComments}
-            data-test-id={`toggle-comments-${recipe.id}`}
-            aria-label={showComments ? 'Kommentare ausblenden' : 'Kommentare anzeigen'}
-            className="flex items-center justify-between w-full text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
-          >
-            <div className="flex items-center gap-2">
-              <MessageCircle className="h-4 w-4 text-secondary-500" />
-              Kommentare
-              {recipe.comments.length > 0 && (
-                <span className="bg-secondary-100 text-secondary-700 text-xs px-2 py-0.5 rounded-full">
-                  {recipe.comments.length}
+        {/* Compact view - Quick info bar */}
+        {!isExpanded && (
+          <div className="flex items-center justify-between pt-3 border-t border-gray-100">
+            <div className="flex items-center gap-3 text-xs text-gray-500">
+              {recipe.rating && (
+                <span className="flex items-center gap-1">
+                  ⭐ {recipe.rating}/5
                 </span>
               )}
-            </div>
-            <span className="text-xs text-primary-500">
-              {showComments ? 'Ausblenden' : 'Anzeigen'}
-            </span>
-          </button>
-
-          {showComments && (
-            <div className="mt-3 space-y-3">
-              {/* Comment List */}
+              {recipe.ingredients.length > 0 && (
+                <span>🥕 {recipe.ingredients.length}</span>
+              )}
               {recipe.comments.length > 0 && (
-                <div className="space-y-2 max-h-40 overflow-y-auto">
-                  {recipe.comments.map((comment) => (
-                    <div
-                      key={comment.id}
-                      className="bg-gray-50 rounded-lg p-3 text-sm"
-                    >
-                      <p className="text-gray-700">{comment.text}</p>
-                      <p className="text-xs text-gray-400 mt-1">
-                        {new Date(comment.createdAt).toLocaleDateString('de-DE', {
-                          day: '2-digit',
-                          month: '2-digit',
-                          year: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })}
-                      </p>
-                    </div>
-                  ))}
-                </div>
+                <span>💬 {recipe.comments.length}</span>
               )}
-
-              {/* Add Comment Form */}
-              <form onSubmit={handleAddComment} className="flex gap-2">
-                <input
-                  type="text"
-                  value={commentText}
-                  onChange={handleCommentChange}
-                  data-test-id={`comment-input-${recipe.id}`}
-                  aria-label="Kommentar hinzufügen"
-                  placeholder="Kommentar hinzufügen..."
-                  className="flex-1 px-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:border-secondary-500 focus:outline-none transition-colors"
-                />
-                <button
-                  type="submit"
-                  data-test-id={`add-comment-${recipe.id}`}
-                  aria-label="Kommentar senden"
-                  disabled={!commentText.trim()}
-                  className={clsx(
-                    'px-3 py-2 rounded-lg transition-all duration-200',
-                    commentText.trim()
-                      ? 'bg-secondary-500 text-white hover:bg-secondary-600'
-                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                  )}
-                >
-                  <Send className="h-4 w-4" />
-                </button>
-              </form>
             </div>
-          )}
-        </div>
-
-        {/* Actions */}
-        <div className="flex gap-2">
-          {recipe.url && recipe.url.trim() !== '' && (
             <button
-              onClick={handleOpenLink}
-              data-test-id={`open-recipe-${recipe.id}`}
-              aria-label={`Rezept ${recipe.title} öffnen`}
-              className={clsx(
-                'flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200',
-                'bg-primary-500 text-white hover:bg-primary-600 hover:shadow-md'
-              )}
+              onClick={handleToggleExpand}
+              className="text-xs text-primary-500 hover:text-primary-600 font-medium"
             >
-              <ExternalLink className="h-4 w-4" />
-              Öffnen
+              Mehr anzeigen ▼
             </button>
-          )}
-          <button
-            onClick={handleDelete}
-            data-test-id={`delete-recipe-${recipe.id}`}
-            aria-label={`Rezept ${recipe.title} löschen`}
-            className={clsx(
-              'px-4 py-2 rounded-lg font-medium transition-all duration-200',
-              'bg-red-100 text-red-600 hover:bg-red-200',
-              !recipe.url || recipe.url.trim() === '' ? 'flex-1' : ''
-            )}
-          >
-            <Trash2 className="h-4 w-4" />
-          </button>
-        </div>
+          </div>
+        )}
       </div>
     </div>
     </>

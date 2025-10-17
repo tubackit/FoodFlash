@@ -41,7 +41,9 @@ npm run build
 - 🎨 Automatische Plattform-Erkennung mit passenden Icons
 - 📤📥 **Export/Import**: Rezepte mit Familie teilen
 - ☁️ **GitHub Gist Sync**: Cloud-Speicher für Familie
-- 🔄 **Familie-Sync-Button**: 1-Klick-Update von fester Gist-URL (NEU!)
+- 🔄 **Familie-Sync-Button**: 1-Klick-Update von fester Gist-URL
+- 🎬 **YouTube-Suche**: Rezepte direkt von YouTube importieren (NEU!)
+- 🥕 **Zutaten → Einkaufsliste**: 1-Klick-Import mit Auto-Kategorisierung (NEU!)
 
 ### ✅ Wochenplaner
 - 📅 7-Tage-Übersicht (Montag - Sonntag)
