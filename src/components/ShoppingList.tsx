@@ -305,7 +305,7 @@ const ShoppingList = () => {
                         <p
                           className={clsx(
                             'font-medium',
-                            item.checked ? 'line-through text-gray-400' : 'text-gray-200'
+                            item.checked ? 'line-through text-gray-400' : 'text-white'
                           )}
                         >
                           {item.name}
@@ -314,7 +314,7 @@ const ShoppingList = () => {
                           <p
                             className={clsx(
                               'text-sm',
-                              item.checked ? 'text-gray-400' : 'text-gray-300'
+                              item.checked ? 'text-gray-400' : 'text-gray-200'
                             )}
                           >
                             {item.quantity}
