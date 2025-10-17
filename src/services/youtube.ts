@@ -7,7 +7,7 @@ export interface YouTubeVideo {
   url: string
 }
 
-const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY
+const API_KEY = (import.meta as any).env?.VITE_YOUTUBE_API_KEY
 
 export const searchYouTubeVideos = async (query: string): Promise<YouTubeVideo[]> => {
   if (!API_KEY) {
