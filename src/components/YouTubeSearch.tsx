@@ -13,6 +13,9 @@ const YouTubeSearch = ({ onSelect, onClose }: YouTubeSearchProps) => {
   const [videos, setVideos] = useState<YouTubeVideo[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  
+  // Check if we're in development mode (localhost)
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value)
@@ -40,6 +43,35 @@ const YouTubeSearch = ({ onSelect, onClose }: YouTubeSearchProps) => {
   const handleVideoSelect = (video: YouTubeVideo) => {
     onSelect(video)
     onClose()
+  }
+
+  // Show warning if not on localhost
+  if (!isLocal) {
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div className="bg-slate-800/80 rounded-2xl p-6 max-w-md w-full shadow-2xl text-center">
+          <div className="mb-4">
+            <Youtube className="h-16 w-16 text-red-600 mx-auto mb-4" />
+            <h3 className="text-2xl font-bold text-gray-100 mb-2">
+              YouTube-Suche nur lokal verfügbar
+            </h3>
+            <p className="text-gray-300 mb-6">
+              Die YouTube-Suche funktioniert nur auf dem lokalen Development-Server 
+              aus Sicherheitsgründen. Verwende die App lokal unter:
+            </p>
+            <code className="bg-slate-700 px-3 py-2 rounded text-primary-400 font-mono text-sm">
+              http://localhost:5174/FoodFlash/
+            </code>
+          </div>
+          <button
+            onClick={onClose}
+            className="w-full bg-primary-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-primary-700 transition-colors"
+          >
+            Schließen
+          </button>
+        </div>
+      </div>
+    )
   }
 
   return (
