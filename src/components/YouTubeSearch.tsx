@@ -88,9 +88,9 @@ const YouTubeSearch = ({ onSelect, onClose }: YouTubeSearchProps) => {
             onClick={onClose}
             data-test-id="close-youtube-search"
             aria-label="Suche schließen"
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            className="p-2 hover:bg-slate-700 rounded-full transition-colors"
           >
-            <X className="h-6 w-6 text-gray-500" />
+            <X className="h-6 w-6 text-gray-300" />
           </button>
         </div>
 
@@ -102,7 +102,7 @@ const YouTubeSearch = ({ onSelect, onClose }: YouTubeSearchProps) => {
               value={searchTerm}
               onChange={handleSearchChange}
               placeholder="Suche nach Rezepten... z.B. 'Carbonara'"
-              className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-lg focus:border-red-500 focus:outline-none transition-colors"
+              className="w-full pl-12 pr-4 py-3 border-2 border-gray-600 rounded-lg focus:border-red-500 focus:outline-none transition-colors bg-slate-700 text-gray-100 placeholder-gray-400"
               autoFocus
             />
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
