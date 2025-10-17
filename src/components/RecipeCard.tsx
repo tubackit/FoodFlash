@@ -132,7 +132,7 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
         />
       )}
       
-      <div className="bg-dark-800/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-dark-600/50 hover:border-primary-500/30 hover:autumn-glow">
+      <div className="bg-slate-800/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-dark-600/50 hover:border-primary-500/30 hover:autumn-glow">
       {/* Image - Always visible */}
       <button
         onClick={handleToggleExpand}
@@ -176,7 +176,7 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
             onClick={handleOpenEditModal}
             data-test-id={`edit-recipe-${recipe.id}`}
             aria-label={`Rezept ${recipe.title} bearbeiten`}
-            className="p-2 hover:bg-dark-700/50 rounded-lg transition-colors text-gray-400 hover:text-primary-400"
+            className="p-2 hover:bg-slate-700/50 rounded-lg transition-colors text-gray-400 hover:text-primary-400"
           >
             <Edit className="h-4 w-4" />
           </button>
@@ -239,7 +239,7 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
                 </div>
                 <div className="space-y-1 max-h-32 overflow-y-auto">
                   {recipe.ingredients.map((ingredient, idx) => (
-                    <div key={idx} className="text-sm text-gray-200 bg-dark-700/50 rounded px-2 py-1 flex justify-between">
+                    <div key={idx} className="text-sm text-gray-200 bg-slate-700/50 rounded px-2 py-1 flex justify-between">
                       <span>{ingredient.name}</span>
                       {ingredient.quantity && (
                         <span className="text-gray-400 text-xs">{ingredient.quantity}</span>
@@ -292,7 +292,7 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
                   </button>
                 </div>
               ) : (
-                <div className="text-sm text-gray-300 bg-dark-700/50 rounded-lg p-3 min-h-[60px]">
+                <div className="text-sm text-gray-300 bg-slate-700/50 rounded-lg p-3 min-h-[60px]">
                   {recipe.notes || (
                     <span className="text-gray-500 italic">Keine Notizen vorhanden</span>
                   )}
@@ -330,7 +330,7 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
                       {recipe.comments.map((comment) => (
                         <div
                           key={comment.id}
-                          className="bg-dark-700/50 rounded-lg p-3 text-sm"
+                          className="bg-slate-700/50 rounded-lg p-3 text-sm"
                         >
                           <p className="text-gray-200">{comment.text}</p>
                           <p className="text-xs text-gray-500 mt-1">
@@ -367,7 +367,7 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
                         'px-3 py-2 rounded-lg transition-all duration-200',
                         commentText.trim()
                           ? 'bg-secondary-500 text-white hover:bg-secondary-600'
-                          : 'bg-dark-600/50 text-gray-500 cursor-not-allowed'
+                          : 'bg-slate-600/50 text-gray-500 cursor-not-allowed'
                       )}
                     >
                       <Send className="h-4 w-4" />

@@ -25,7 +25,7 @@ const Hero = ({ onPlatformClick }: HeroProps) => {
           onClick={() => onPlatformClick('youtube')}
           data-test-id="platform-youtube"
           aria-label="YouTube Rezepte anzeigen"
-          className="bg-dark-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border-2 border-red-500/30 hover:scale-105 transition-all duration-300 hover:border-red-400 hover:shadow-2xl hover:autumn-glow cursor-pointer"
+          className="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border-2 border-red-500/30 hover:scale-105 transition-all duration-300 hover:border-red-400 hover:shadow-2xl hover:autumn-glow cursor-pointer"
         >
           <div className="w-16 h-16 bg-red-600/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-red-500/30">
             <Youtube className="h-8 w-8 text-red-400" />
@@ -39,7 +39,7 @@ const Hero = ({ onPlatformClick }: HeroProps) => {
           onClick={() => onPlatformClick('instagram')}
           data-test-id="platform-instagram"
           aria-label="Instagram Rezepte anzeigen"
-          className="bg-dark-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border-2 border-pink-500/30 hover:scale-105 transition-all duration-300 hover:border-pink-400 hover:shadow-2xl cursor-pointer"
+          className="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border-2 border-pink-500/30 hover:scale-105 transition-all duration-300 hover:border-pink-400 hover:shadow-2xl cursor-pointer"
         >
           <div className="w-16 h-16 bg-gradient-to-br from-pink-600/20 to-purple-600/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-pink-500/30">
             <Instagram className="h-8 w-8 text-pink-400" />
@@ -53,7 +53,7 @@ const Hero = ({ onPlatformClick }: HeroProps) => {
           onClick={() => onPlatformClick('facebook')}
           data-test-id="platform-facebook"
           aria-label="Facebook Rezepte anzeigen"
-          className="bg-dark-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border-2 border-blue-500/30 hover:scale-105 transition-all duration-300 hover:border-blue-400 hover:shadow-2xl cursor-pointer"
+          className="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border-2 border-blue-500/30 hover:scale-105 transition-all duration-300 hover:border-blue-400 hover:shadow-2xl cursor-pointer"
         >
           <div className="w-16 h-16 bg-blue-600/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-blue-500/30">
             <Facebook className="h-8 w-8 text-blue-400" />
@@ -67,7 +67,7 @@ const Hero = ({ onPlatformClick }: HeroProps) => {
           onClick={() => onPlatformClick('tiktok')}
           data-test-id="platform-tiktok"
           aria-label="TikTok Rezepte anzeigen"
-          className="bg-dark-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border-2 border-gray-500/30 hover:scale-105 transition-all duration-300 hover:border-gray-400 hover:shadow-2xl cursor-pointer"
+          className="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border-2 border-gray-500/30 hover:scale-105 transition-all duration-300 hover:border-gray-400 hover:shadow-2xl cursor-pointer"
         >
           <div className="w-16 h-16 bg-gray-600/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-gray-500/30">
             <Music className="h-8 w-8 text-gray-400" />

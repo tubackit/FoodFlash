@@ -132,7 +132,7 @@ const ShoppingList = () => {
           Artikel hinzufügen
         </button>
       ) : (
-        <div className="bg-dark-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border-2 border-primary-500/30 autumn-glow mb-6">
+        <div className="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border-2 border-primary-500/30 autumn-glow mb-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-bold text-gray-800">Neuer Artikel</h3>
             <button
@@ -270,7 +270,7 @@ const ShoppingList = () => {
             if (category.items.length === 0) return null
 
             return (
-              <div key={category.key} className="bg-dark-700/50 backdrop-blur-sm rounded-2xl p-5 shadow-lg border-2 border-dark-600/50">
+              <div key={category.key} className="bg-slate-700/50 backdrop-blur-sm rounded-2xl p-5 shadow-lg border-2 border-dark-600/50">
                 <h3 className="font-bold text-gray-800 mb-3 flex items-center gap-2 text-lg">
                   <span className="text-2xl">{category.emoji}</span>
                   {category.label}
@@ -338,7 +338,7 @@ const ShoppingList = () => {
           })}
         </div>
       ) : (
-        <div className="bg-dark-800/80 backdrop-blur-sm rounded-2xl p-12 text-center shadow-lg border border-dark-600/50">
+        <div className="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-12 text-center shadow-lg border border-dark-600/50">
           <div className="text-6xl mb-4">🛒</div>
           <h3 className="text-2xl font-bold text-gray-700 mb-2">Deine Einkaufsliste ist leer</h3>
           <p className="text-gray-500">Füge Artikel hinzu und sie werden nach Supermarkt-Kategorien sortiert!</p>

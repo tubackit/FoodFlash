@@ -8,7 +8,7 @@ interface HeaderProps {
 
 const Header = ({ activeTab, setActiveTab }: HeaderProps) => {
   return (
-    <header className="bg-dark-800/95 backdrop-blur-sm shadow-2xl border-b-2 border-primary-600/50 autumn-glow">
+    <header className="bg-slate-800/95 backdrop-blur-sm shadow-2xl border-b-2 border-primary-600/50 autumn-glow">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -35,7 +35,7 @@ const Header = ({ activeTab, setActiveTab }: HeaderProps) => {
                 'flex items-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-200',
                 activeTab === 'home'
                   ? 'bg-primary-600 text-white shadow-lg scale-105 autumn-glow'
-                  : 'bg-dark-700/50 text-gray-300 hover:bg-primary-600/20 hover:text-primary-300 border border-dark-600/50'
+                  : 'bg-slate-700/50 text-gray-300 hover:bg-primary-600/20 hover:text-primary-300 border border-slate-600/50'
               )}
             >
               <Home className="h-5 w-5" />
@@ -50,7 +50,7 @@ const Header = ({ activeTab, setActiveTab }: HeaderProps) => {
                 'flex items-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-200',
                 activeTab === 'recipes'
                   ? 'bg-secondary-600 text-white shadow-lg scale-105 autumn-glow-green'
-                  : 'bg-dark-700/50 text-gray-300 hover:bg-secondary-600/20 hover:text-secondary-300 border border-dark-600/50'
+                  : 'bg-slate-700/50 text-gray-300 hover:bg-secondary-600/20 hover:text-secondary-300 border border-dark-600/50'
               )}
             >
               <BookOpen className="h-5 w-5" />
@@ -65,7 +65,7 @@ const Header = ({ activeTab, setActiveTab }: HeaderProps) => {
                 'flex items-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-200',
                 activeTab === 'planner'
                   ? 'bg-accent-600 text-white shadow-lg scale-105 autumn-glow-gold'
-                  : 'bg-dark-700/50 text-gray-300 hover:bg-accent-600/20 hover:text-accent-300 border border-dark-600/50'
+                  : 'bg-slate-700/50 text-gray-300 hover:bg-accent-600/20 hover:text-accent-300 border border-dark-600/50'
               )}
             >
               <Calendar className="h-5 w-5" />
@@ -80,7 +80,7 @@ const Header = ({ activeTab, setActiveTab }: HeaderProps) => {
                 'flex items-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-200',
                 activeTab === 'shopping'
                   ? 'bg-primary-600 text-white shadow-lg scale-105 autumn-glow'
-                  : 'bg-dark-700/50 text-gray-300 hover:bg-primary-600/20 hover:text-primary-300 border border-dark-600/50'
+                  : 'bg-slate-700/50 text-gray-300 hover:bg-primary-600/20 hover:text-primary-300 border border-slate-600/50'
               )}
             >
               <ShoppingCart className="h-5 w-5" />
