@@ -6,6 +6,7 @@ import WeekPlanner from './components/WeekPlanner'
 import ShoppingList from './components/ShoppingList'
 import { Platform } from './types/recipe'
 
+// Dark theme version
 function App() {
   const [activeTab, setActiveTab] = useState<'home' | 'recipes' | 'planner' | 'shopping'>('home')
   const [platformFilter, setPlatformFilter] = useState<Platform | null>(null)
