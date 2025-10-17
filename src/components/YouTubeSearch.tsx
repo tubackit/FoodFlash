@@ -44,10 +44,10 @@ const YouTubeSearch = ({ onSelect, onClose }: YouTubeSearchProps) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-2xl p-6 max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
+      <div className="bg-slate-800/80 rounded-2xl p-6 max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+          <h3 className="text-2xl font-bold text-gray-100 flex items-center gap-2">
             <Youtube className="h-7 w-7 text-red-600" />
             Auf YouTube suchen
           </h3>
@@ -115,7 +115,7 @@ const YouTubeSearch = ({ onSelect, onClose }: YouTubeSearchProps) => {
                   onClick={() => handleVideoSelect(video)}
                   data-test-id={`youtube-video-${video.id}`}
                   aria-label={`${video.title} auswählen`}
-                  className="bg-white border-2 border-gray-200 rounded-xl overflow-hidden hover:border-red-400 hover:shadow-lg transition-all duration-200 text-left group"
+                  className="bg-slate-800/80 border-2 border-gray-200 rounded-xl overflow-hidden hover:border-red-400 hover:shadow-lg transition-all duration-200 text-left group"
                 >
                   {/* Thumbnail */}
                   <div className="relative aspect-video bg-gray-100">
@@ -131,7 +131,7 @@ const YouTubeSearch = ({ onSelect, onClose }: YouTubeSearchProps) => {
 
                   {/* Info */}
                   <div className="p-3">
-                    <h4 className="font-bold text-gray-800 text-sm line-clamp-2 mb-1">
+                    <h4 className="font-bold text-gray-100 text-sm line-clamp-2 mb-1">
                       {video.title}
                     </h4>
                     <p className="text-xs text-gray-500 line-clamp-1">

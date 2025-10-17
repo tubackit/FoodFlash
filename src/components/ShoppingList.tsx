@@ -105,7 +105,7 @@ const ShoppingList = () => {
     <div className="max-w-4xl mx-auto">
       {/* Header */}
       <div className="text-center mb-8">
-        <h2 className="text-4xl font-bold text-gray-800 mb-2 flex items-center justify-center gap-3">
+        <h2 className="text-4xl font-bold text-gray-100 mb-2 flex items-center justify-center gap-3">
           <ShoppingCart className="h-10 w-10 text-primary-500" />
           Einkaufsliste
         </h2>
@@ -134,7 +134,7 @@ const ShoppingList = () => {
       ) : (
         <div className="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border-2 border-primary-500/30 autumn-glow mb-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-bold text-gray-800">Neuer Artikel</h3>
+            <h3 className="text-xl font-bold text-gray-100">Neuer Artikel</h3>
             <button
               onClick={() => setIsAdding(false)}
               data-test-id="close-add-item"
@@ -148,7 +148,7 @@ const ShoppingList = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="item-name" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="item-name" className="block text-sm font-medium text-gray-200 mb-1">
                   Artikel *
                 </label>
                 <input
@@ -166,7 +166,7 @@ const ShoppingList = () => {
               </div>
 
               <div>
-                <label htmlFor="item-quantity" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="item-quantity" className="block text-sm font-medium text-gray-200 mb-1">
                   Menge (optional)
                 </label>
                 <input
@@ -183,7 +183,7 @@ const ShoppingList = () => {
             </div>
 
             <div>
-              <label htmlFor="item-category" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="item-category" className="block text-sm font-medium text-gray-200 mb-1">
                 Kategorie *
               </label>
               <select
@@ -271,7 +271,7 @@ const ShoppingList = () => {
 
             return (
               <div key={category.key} className="bg-slate-700/50 backdrop-blur-sm rounded-2xl p-5 shadow-lg border-2 border-dark-600/50">
-                <h3 className="font-bold text-gray-800 mb-3 flex items-center gap-2 text-lg">
+                <h3 className="font-bold text-gray-100 mb-3 flex items-center gap-2 text-lg">
                   <span className="text-2xl">{category.emoji}</span>
                   {category.label}
                   <span className="text-sm text-gray-500 font-normal ml-auto">
@@ -305,7 +305,7 @@ const ShoppingList = () => {
                         <p
                           className={clsx(
                             'font-medium',
-                            item.checked ? 'line-through text-gray-400' : 'text-gray-800'
+                            item.checked ? 'line-through text-gray-400' : 'text-gray-100'
                           )}
                         >
                           {item.name}
@@ -340,7 +340,7 @@ const ShoppingList = () => {
       ) : (
         <div className="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-12 text-center shadow-lg border border-dark-600/50">
           <div className="text-6xl mb-4">🛒</div>
-          <h3 className="text-2xl font-bold text-gray-700 mb-2">Deine Einkaufsliste ist leer</h3>
+          <h3 className="text-2xl font-bold text-gray-200 mb-2">Deine Einkaufsliste ist leer</h3>
           <p className="text-gray-500">Füge Artikel hinzu und sie werden nach Supermarkt-Kategorien sortiert!</p>
         </div>
       )}

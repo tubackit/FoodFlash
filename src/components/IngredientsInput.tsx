@@ -46,7 +46,7 @@ const IngredientsInput = ({ ingredients, onChange }: IngredientsInputProps) => {
 
   return (
     <div>
-      <label className="block text-sm font-medium text-gray-700 mb-2">
+      <label className="block text-sm font-medium text-gray-200 mb-2">
         Zutaten (optional)
       </label>
 
@@ -58,7 +58,7 @@ const IngredientsInput = ({ ingredients, onChange }: IngredientsInputProps) => {
               key={index}
               className="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2 group"
             >
-              <span className="flex-1 text-sm text-gray-700">
+              <span className="flex-1 text-sm text-gray-200">
                 {ingredient.name}
                 {ingredient.quantity && (
                   <span className="text-gray-500 ml-2">({ingredient.quantity})</span>

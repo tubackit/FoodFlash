@@ -130,7 +130,7 @@ const AddRecipeForm = ({ onAdd }: AddRecipeFormProps) => {
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Title Input */}
         <div>
-          <label htmlFor="recipe-title" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="recipe-title" className="block text-sm font-medium text-gray-200 mb-1">
             Rezept-Titel *
           </label>
           <input
@@ -148,7 +148,7 @@ const AddRecipeForm = ({ onAdd }: AddRecipeFormProps) => {
 
         {/* URL Input */}
         <div>
-          <label htmlFor="recipe-url" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="recipe-url" className="block text-sm font-medium text-gray-200 mb-1">
             Link zum Rezept (optional)
           </label>
           <input
@@ -168,7 +168,7 @@ const AddRecipeForm = ({ onAdd }: AddRecipeFormProps) => {
 
         {/* Description Textarea */}
         <div>
-          <label htmlFor="recipe-description" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="recipe-description" className="block text-sm font-medium text-gray-200 mb-1">
             Beschreibung (optional)
           </label>
           <textarea
@@ -189,7 +189,7 @@ const AddRecipeForm = ({ onAdd }: AddRecipeFormProps) => {
         {/* Image URL Input */}
         <div>
           <div className="flex items-center justify-between mb-1">
-            <label htmlFor="recipe-image" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="recipe-image" className="block text-sm font-medium text-gray-200">
               Bild-URL (optional)
             </label>
             <div className="flex items-center gap-2">
@@ -243,7 +243,7 @@ const AddRecipeForm = ({ onAdd }: AddRecipeFormProps) => {
           {/* Image Preview */}
           {imageUrl && (
             <div className="mt-3">
-              <p className="text-xs font-medium text-gray-700 mb-1">Vorschau:</p>
+              <p className="text-xs font-medium text-gray-200 mb-1">Vorschau:</p>
               <div className="relative w-full h-40 bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-200">
                 <img
                   src={convertGoogleDriveUrl(imageUrl)}

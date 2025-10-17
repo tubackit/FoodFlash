@@ -62,7 +62,7 @@ const WeekPlanner = () => {
     <div className="max-w-7xl mx-auto">
       {/* Header */}
       <div className="text-center mb-8">
-        <h2 className="text-4xl font-bold text-gray-800 mb-2 flex items-center justify-center gap-3">
+        <h2 className="text-4xl font-bold text-gray-100 mb-2 flex items-center justify-center gap-3">
           <Calendar className="h-10 w-10 text-accent-500" />
           Wochenplaner
         </h2>
@@ -94,8 +94,8 @@ const WeekPlanner = () => {
               {/* Day Header */}
               <div className="flex items-center justify-between mb-3 pb-2 border-b-2 border-gray-100">
                 <div>
-                  <h3 className="font-bold text-gray-800 hidden lg:block">{weekDay.label}</h3>
-                  <h3 className="font-bold text-gray-800 lg:hidden">{weekDay.short}</h3>
+                  <h3 className="font-bold text-gray-100 hidden lg:block">{weekDay.label}</h3>
+                  <h3 className="font-bold text-gray-100 lg:hidden">{weekDay.short}</h3>
                 </div>
                 <button
                   onClick={() => handleClearDay(weekDay.key)}
@@ -125,7 +125,7 @@ const WeekPlanner = () => {
                             key={`${meal.recipeId}-${idx}`}
                             className="bg-gradient-to-r from-primary-50 to-secondary-50 rounded-lg p-2 text-xs group relative"
                           >
-                            <p className="font-medium text-gray-700 pr-6 line-clamp-2">
+                            <p className="font-medium text-gray-200 pr-6 line-clamp-2">
                               {recipe.title}
                             </p>
                             <button
@@ -168,7 +168,7 @@ const WeekPlanner = () => {
       {selectedDay && (
         <div className="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-2xl border-2 border-accent-500/30 autumn-glow-gold">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+            <h3 className="text-xl font-bold text-gray-100 flex items-center gap-2">
               <ChefHat className="h-6 w-6 text-accent-500" />
               Rezept für {weekDays.find((d) => d.key === selectedDay)?.label} auswählen
             </h3>
@@ -176,7 +176,7 @@ const WeekPlanner = () => {
               onClick={() => setSelectedDay(null)}
               data-test-id="close-recipe-selection"
               aria-label="Rezeptauswahl schließen"
-              className="text-gray-500 hover:text-gray-700"
+              className="text-gray-500 hover:text-gray-200"
             >
               ✕
             </button>
@@ -184,7 +184,7 @@ const WeekPlanner = () => {
 
           {/* Meal Type Selection */}
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Mahlzeit</label>
+            <label className="block text-sm font-medium text-gray-200 mb-2">Mahlzeit</label>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
               {mealTypes.map((mealType) => (
                 <button
@@ -217,7 +217,7 @@ const WeekPlanner = () => {
                   aria-label={`${recipe.title} hinzufügen`}
                   className="bg-gradient-to-br from-primary-50 to-secondary-50 hover:from-primary-100 hover:to-secondary-100 rounded-xl p-4 text-left transition-all duration-200 hover:shadow-lg hover:scale-105 border-2 border-transparent hover:border-accent-300"
                 >
-                  <p className="font-bold text-gray-800 mb-1 line-clamp-2">{recipe.title}</p>
+                  <p className="font-bold text-gray-100 mb-1 line-clamp-2">{recipe.title}</p>
                   {recipe.rating && (
                     <p className="text-xs text-gray-600">⭐ {recipe.rating}/5</p>
                   )}

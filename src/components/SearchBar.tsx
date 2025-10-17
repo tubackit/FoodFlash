@@ -31,7 +31,7 @@ const SearchBar = ({ searchTerm, onSearchChange }: SearchBarProps) => {
         className={clsx(
           'w-full pl-12 pr-12 py-3 rounded-full border-2 border-gray-200',
           'focus:border-primary-500 focus:outline-none transition-colors',
-          'bg-white shadow-sm'
+          'bg-slate-800/80 shadow-sm'
         )}
       />
       {searchTerm && (
@@ -39,7 +39,7 @@ const SearchBar = ({ searchTerm, onSearchChange }: SearchBarProps) => {
           onClick={handleClear}
           data-test-id="clear-search"
           aria-label="Suche löschen"
-          className="absolute inset-y-0 right-0 pr-4 flex items-center hover:text-gray-700 text-gray-400 transition-colors"
+          className="absolute inset-y-0 right-0 pr-4 flex items-center hover:text-gray-200 text-gray-400 transition-colors"
         >
           <X className="h-5 w-5" />
         </button>

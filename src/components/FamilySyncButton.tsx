@@ -68,8 +68,8 @@ const FamilySyncButton = ({ onSync, mode = 'merge' }: FamilySyncButtonProps) => 
         className={clsx(
           'w-full py-2 px-4 rounded-lg font-medium transition-all duration-200 flex items-center justify-center gap-2',
           isLoading
-            ? 'bg-white/30 cursor-not-allowed'
-            : 'bg-white text-blue-600 hover:bg-blue-50 hover:shadow-md'
+            ? 'bg-slate-800/80/30 cursor-not-allowed'
+            : 'bg-slate-800/80 text-blue-600 hover:bg-blue-50 hover:shadow-md'
         )}
       >
         <RefreshCw className={clsx('h-4 w-4', isLoading && 'animate-spin')} />

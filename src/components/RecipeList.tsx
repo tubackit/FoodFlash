@@ -204,7 +204,7 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
     <div className="max-w-6xl mx-auto">
       {/* Header */}
       <div className="text-center mb-8">
-        <h2 className="text-4xl font-bold text-gray-800 mb-2 flex items-center justify-center gap-3">
+        <h2 className="text-4xl font-bold text-gray-100 mb-2 flex items-center justify-center gap-3">
           <BookOpen className="h-10 w-10 text-primary-500" />
           Deine Rezepte
         </h2>
@@ -301,9 +301,9 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
       {/* Import Dialog */}
       {showImportDialog && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl">
+          <div className="bg-slate-800/80 rounded-2xl p-6 max-w-md w-full shadow-2xl">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+              <h3 className="text-xl font-bold text-gray-100 flex items-center gap-2">
                 <FileJson className="h-6 w-6 text-secondary-500" />
                 Rezepte importieren
               </h3>
@@ -319,7 +319,7 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
 
             {/* Import Mode Selection */}
             <div className="mb-4">
-              <p className="text-sm font-medium text-gray-700 mb-2">Import-Modus:</p>
+              <p className="text-sm font-medium text-gray-200 mb-2">Import-Modus:</p>
               <div className="space-y-2">
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
@@ -330,7 +330,7 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
                     className="w-4 h-4 text-secondary-500"
                   />
                   <div>
-                    <span className="font-medium text-gray-800">Hinzufügen</span>
+                    <span className="font-medium text-gray-100">Hinzufügen</span>
                     <p className="text-xs text-gray-600">Neue Rezepte zu bestehenden hinzufügen</p>
                   </div>
                 </label>
@@ -343,7 +343,7 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
                     className="w-4 h-4 text-secondary-500"
                   />
                   <div>
-                    <span className="font-medium text-gray-800">Ersetzen</span>
+                    <span className="font-medium text-gray-100">Ersetzen</span>
                     <p className="text-xs text-gray-600">Alle bestehenden Rezepte löschen und ersetzen</p>
                   </div>
                 </label>
@@ -379,9 +379,9 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
       {/* GitHub Gist Dialog */}
       {showGistDialog && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl p-6 max-w-lg w-full shadow-2xl">
+          <div className="bg-slate-800/80 rounded-2xl p-6 max-w-lg w-full shadow-2xl">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+              <h3 className="text-xl font-bold text-gray-100 flex items-center gap-2">
                 <Cloud className="h-6 w-6 text-blue-500" />
                 Von GitHub Gist laden
               </h3>
@@ -410,7 +410,7 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
 
             {/* Import Mode Selection */}
             <div className="mb-4">
-              <p className="text-sm font-medium text-gray-700 mb-2">Import-Modus:</p>
+              <p className="text-sm font-medium text-gray-200 mb-2">Import-Modus:</p>
               <div className="space-y-2">
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
@@ -421,7 +421,7 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
                     className="w-4 h-4 text-blue-500"
                   />
                   <div>
-                    <span className="font-medium text-gray-800">Hinzufügen</span>
+                    <span className="font-medium text-gray-100">Hinzufügen</span>
                     <p className="text-xs text-gray-600">Neue Rezepte zu bestehenden hinzufügen</p>
                   </div>
                 </label>
@@ -434,7 +434,7 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
                     className="w-4 h-4 text-blue-500"
                   />
                   <div>
-                    <span className="font-medium text-gray-800">Ersetzen</span>
+                    <span className="font-medium text-gray-100">Ersetzen</span>
                     <p className="text-xs text-gray-600">Alle bestehenden Rezepte löschen und ersetzen</p>
                   </div>
                 </label>
@@ -444,7 +444,7 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
             {/* Gist URL Input */}
             <div className="mb-4">
               <div className="flex items-center justify-between mb-1">
-                <label htmlFor="gist-url" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="gist-url" className="block text-sm font-medium text-gray-200">
                   GitHub Gist URL
                 </label>
                 {localStorage.getItem('foodflash_gist_url') && (
@@ -476,7 +476,7 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
                   onChange={(e) => setSaveGistUrl(e.target.checked)}
                   className="w-4 h-4 text-blue-500"
                 />
-                <span className="text-sm text-gray-700">URL für nächstes Mal speichern</span>
+                <span className="text-sm text-gray-200">URL für nächstes Mal speichern</span>
               </label>
             </div>
 
@@ -523,9 +523,9 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
             ))}
           </div>
         ) : (
-          <div className="bg-white rounded-2xl p-12 text-center shadow-lg">
+          <div className="bg-slate-800/80 rounded-2xl p-12 text-center shadow-lg">
             <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-2xl font-bold text-gray-700 mb-2">
+            <h3 className="text-2xl font-bold text-gray-200 mb-2">
               Keine Ergebnisse
             </h3>
             <p className="text-gray-500">
@@ -534,9 +534,9 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
           </div>
         )
       ) : (
-        <div className="bg-white rounded-2xl p-12 text-center shadow-lg">
+        <div className="bg-slate-800/80 rounded-2xl p-12 text-center shadow-lg">
           <div className="text-6xl mb-4">🍳</div>
-          <h3 className="text-2xl font-bold text-gray-700 mb-2">
+          <h3 className="text-2xl font-bold text-gray-200 mb-2">
             Noch keine Rezepte
           </h3>
           <p className="text-gray-500">

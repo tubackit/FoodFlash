@@ -87,9 +87,9 @@ const EditRecipeModal = ({ recipe, onSave, onClose }: EditRecipeModalProps) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-2xl p-6 max-w-2xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div className="bg-slate-800/80 rounded-2xl p-6 max-w-2xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-2xl font-bold text-gray-800">
+          <h3 className="text-2xl font-bold text-gray-100">
             Rezept bearbeiten
           </h3>
           <button
@@ -105,7 +105,7 @@ const EditRecipeModal = ({ recipe, onSave, onClose }: EditRecipeModalProps) => {
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Title Input */}
           <div>
-            <label htmlFor="edit-title" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="edit-title" className="block text-sm font-medium text-gray-200 mb-1">
               Rezept-Titel *
             </label>
             <input
@@ -121,7 +121,7 @@ const EditRecipeModal = ({ recipe, onSave, onClose }: EditRecipeModalProps) => {
 
           {/* URL Input */}
           <div>
-            <label htmlFor="edit-url" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="edit-url" className="block text-sm font-medium text-gray-200 mb-1">
               Link zum Rezept (optional)
             </label>
             <input
@@ -136,7 +136,7 @@ const EditRecipeModal = ({ recipe, onSave, onClose }: EditRecipeModalProps) => {
 
           {/* Description Textarea */}
           <div>
-            <label htmlFor="edit-description" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="edit-description" className="block text-sm font-medium text-gray-200 mb-1">
               Beschreibung (optional)
             </label>
             <textarea
@@ -155,7 +155,7 @@ const EditRecipeModal = ({ recipe, onSave, onClose }: EditRecipeModalProps) => {
           {/* Image URL Input */}
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label htmlFor="edit-image" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="edit-image" className="block text-sm font-medium text-gray-200">
                 Bild-URL (optional)
               </label>
               <div className="flex items-center gap-2">
@@ -198,7 +198,7 @@ const EditRecipeModal = ({ recipe, onSave, onClose }: EditRecipeModalProps) => {
             {/* Image Preview */}
             {imageUrl && (
               <div className="mt-3">
-                <p className="text-xs font-medium text-gray-700 mb-1">Vorschau:</p>
+                <p className="text-xs font-medium text-gray-200 mb-1">Vorschau:</p>
                 <div className="relative w-full h-40 bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-200">
                   <img
                     src={convertGoogleDriveUrl(imageUrl)}
@@ -241,7 +241,7 @@ const EditRecipeModal = ({ recipe, onSave, onClose }: EditRecipeModalProps) => {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-3 rounded-lg font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
+              className="flex-1 py-3 rounded-lg font-medium bg-gray-100 text-gray-200 hover:bg-gray-200 transition-colors"
             >
               Abbrechen
             </button>
