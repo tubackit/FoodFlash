@@ -121,9 +121,9 @@ const AddRecipeForm = ({ onAdd }: AddRecipeFormProps) => {
           onClick={handleToggleForm}
           data-test-id="close-add-recipe"
           aria-label="Formular schließen"
-          className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+          className="p-2 hover:bg-slate-700 rounded-full transition-colors"
         >
-          <X className="h-6 w-6 text-gray-500" />
+          <X className="h-6 w-6 text-gray-300" />
         </button>
       </div>
 
@@ -141,7 +141,7 @@ const AddRecipeForm = ({ onAdd }: AddRecipeFormProps) => {
             data-test-id="recipe-title-input"
             aria-label="Rezept-Titel eingeben"
             placeholder="z.B. Spaghetti Carbonara"
-            className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:outline-none transition-colors"
+            className="w-full px-4 py-2 border-2 border-gray-600 rounded-lg focus:border-primary-500 focus:outline-none transition-colors bg-slate-700 text-gray-100 placeholder-gray-400"
             required
           />
         </div>
@@ -159,7 +159,7 @@ const AddRecipeForm = ({ onAdd }: AddRecipeFormProps) => {
             data-test-id="recipe-url-input"
             aria-label="Rezept-URL eingeben"
             placeholder="https://www.youtube.com/watch?v=... (oder leer für eigenes Rezept)"
-            className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:outline-none transition-colors"
+            className="w-full px-4 py-2 border-2 border-gray-600 rounded-lg focus:border-primary-500 focus:outline-none transition-colors bg-slate-700 text-gray-100 placeholder-gray-400"
           />
           <p className="text-xs text-gray-500 mt-1">
             YouTube, Instagram, Facebook, TikTok Link - oder leer lassen für eigene Rezepte
@@ -179,7 +179,7 @@ const AddRecipeForm = ({ onAdd }: AddRecipeFormProps) => {
             aria-label="Rezept-Beschreibung eingeben"
             placeholder="Was macht dieses Rezept besonders?"
             rows={3}
-            className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:outline-none transition-colors resize-none"
+            className="w-full px-4 py-2 border-2 border-gray-600 rounded-lg focus:border-primary-500 focus:outline-none transition-colors resize-none bg-slate-700 text-gray-100 placeholder-gray-400"
           />
         </div>
 
@@ -227,7 +227,7 @@ const AddRecipeForm = ({ onAdd }: AddRecipeFormProps) => {
             data-test-id="recipe-image-input"
             aria-label="Bild-URL eingeben"
             placeholder={canAutoFill ? "Klicke 'Auto-Fill' für YouTube-Thumbnail" : "Google Drive oder imgbb.com Link"}
-            className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:outline-none transition-colors"
+            className="w-full px-4 py-2 border-2 border-gray-600 rounded-lg focus:border-primary-500 focus:outline-none transition-colors bg-slate-700 text-gray-100 placeholder-gray-400"
           />
           {canAutoFill && (
             <p className="text-xs text-primary-600 mt-1">
