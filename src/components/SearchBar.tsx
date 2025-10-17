@@ -29,9 +29,9 @@ const SearchBar = ({ searchTerm, onSearchChange }: SearchBarProps) => {
         aria-label="Rezepte suchen"
         placeholder="Suche nach Rezepten, Beschreibung oder Plattform..."
         className={clsx(
-          'w-full pl-12 pr-12 py-3 rounded-full border-2 border-gray-200',
+          'w-full pl-12 pr-12 py-3 rounded-full border-2 border-gray-600',
           'focus:border-primary-500 focus:outline-none transition-colors',
-          'bg-slate-800/80 shadow-sm'
+          'bg-slate-800/80 shadow-sm text-gray-100 placeholder-gray-400'
         )}
       />
       {searchTerm && (

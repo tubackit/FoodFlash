@@ -244,7 +244,7 @@ const AddRecipeForm = ({ onAdd }: AddRecipeFormProps) => {
           {imageUrl && (
             <div className="mt-3">
               <p className="text-xs font-medium text-gray-200 mb-1">Vorschau:</p>
-              <div className="relative w-full h-40 bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-200">
+              <div className="relative w-full h-40 bg-slate-700 rounded-lg overflow-hidden border-2 border-gray-600">
                 <img
                   src={convertGoogleDriveUrl(imageUrl)}
                   alt="Vorschau"

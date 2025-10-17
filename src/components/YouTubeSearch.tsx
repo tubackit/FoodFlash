@@ -148,10 +148,10 @@ const YouTubeSearch = ({ onSelect, onClose }: YouTubeSearchProps) => {
                   onClick={() => handleVideoSelect(video)}
                   data-test-id={`youtube-video-${video.id}`}
                   aria-label={`${video.title} auswählen`}
-                  className="bg-slate-800/80 border-2 border-gray-200 rounded-xl overflow-hidden hover:border-red-400 hover:shadow-lg transition-all duration-200 text-left group"
+                  className="bg-slate-800/80 border-2 border-gray-600 rounded-xl overflow-hidden hover:border-red-400 hover:shadow-lg transition-all duration-200 text-left group"
                 >
                   {/* Thumbnail */}
-                  <div className="relative aspect-video bg-gray-100">
+                  <div className="relative aspect-video bg-slate-700">
                     <img
                       src={video.thumbnail}
                       alt={video.title}

@@ -276,7 +276,7 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
                     aria-label="Notizen bearbeiten"
                     placeholder="Füge deine Notizen hinzu..."
                     rows={3}
-                    className="w-full px-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:border-accent-500 focus:outline-none transition-colors resize-none"
+                    className="w-full px-3 py-2 text-sm border-2 border-gray-600 rounded-lg focus:border-accent-500 focus:outline-none transition-colors resize-none bg-slate-700 text-gray-100 placeholder-gray-400"
                   />
                   <button
                     onClick={handleSaveNotes}
@@ -301,7 +301,7 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
             </div>
 
             {/* Comments Section */}
-            <div className="pb-4 border-b border-gray-200">
+            <div className="pb-4 border-b border-slate-600">
               <button
                 onClick={handleToggleComments}
                 data-test-id={`toggle-comments-${recipe.id}`}
@@ -356,7 +356,7 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
                       data-test-id={`comment-input-${recipe.id}`}
                       aria-label="Kommentar hinzufügen"
                       placeholder="Kommentar hinzufügen..."
-                      className="flex-1 px-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:border-secondary-500 focus:outline-none transition-colors"
+                      className="flex-1 px-3 py-2 text-sm border-2 border-gray-600 rounded-lg focus:border-secondary-500 focus:outline-none transition-colors bg-slate-700 text-gray-100 placeholder-gray-400"
                     />
                     <button
                       type="submit"

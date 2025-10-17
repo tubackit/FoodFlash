@@ -139,7 +139,7 @@ const ShoppingList = () => {
               onClick={() => setIsAdding(false)}
               data-test-id="close-add-item"
               aria-label="Formular schließen"
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              className="p-2 hover:bg-slate-700 rounded-full transition-colors"
             >
               <X className="h-6 w-6 text-gray-300" />
             </button>
@@ -159,7 +159,7 @@ const ShoppingList = () => {
                   data-test-id="item-name-input"
                   aria-label="Artikel-Name eingeben"
                   placeholder="z.B. Tomaten"
-                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:outline-none transition-colors"
+                  className="w-full px-4 py-2 border-2 border-gray-600 rounded-lg focus:border-primary-500 focus:outline-none transition-colors bg-slate-700 text-gray-100 placeholder-gray-400"
                   required
                   autoFocus
                 />
@@ -177,7 +177,7 @@ const ShoppingList = () => {
                   data-test-id="item-quantity-input"
                   aria-label="Menge eingeben"
                   placeholder="z.B. 500g, 3 Stück"
-                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:outline-none transition-colors"
+                  className="w-full px-4 py-2 border-2 border-gray-600 rounded-lg focus:border-primary-500 focus:outline-none transition-colors bg-slate-700 text-gray-100 placeholder-gray-400"
                 />
               </div>
             </div>

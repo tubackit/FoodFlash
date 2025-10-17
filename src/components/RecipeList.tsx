@@ -311,7 +311,7 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
                 onClick={handleCloseImportDialog}
                 data-test-id="close-import-dialog"
                 aria-label="Dialog schließen"
-                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                className="p-2 hover:bg-slate-700 rounded-full transition-colors"
               >
                 <X className="h-6 w-6 text-gray-500" />
               </button>
@@ -389,7 +389,7 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
                 onClick={handleCloseGistDialog}
                 data-test-id="close-gist-dialog"
                 aria-label="Dialog schließen"
-                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                className="p-2 hover:bg-slate-700 rounded-full transition-colors"
               >
                 <X className="h-6 w-6 text-gray-500" />
               </button>
@@ -462,7 +462,7 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
                 value={gistUrl}
                 onChange={handleGistUrlChange}
                 placeholder="https://gist.github.com/username/..."
-                className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
+                className="w-full px-4 py-2 border-2 border-gray-600 rounded-lg focus:border-blue-500 focus:outline-none transition-colors bg-slate-700 text-gray-100 placeholder-gray-400"
               />
               <p className="text-xs text-gray-500 mt-1">
                 Z.B.: https://gist.github.com/username/abc123...
