@@ -92,7 +92,7 @@ const WeekPlanner = () => {
               className="bg-slate-700/50 backdrop-blur-sm rounded-2xl p-4 shadow-lg border-2 border-dark-600/50"
             >
               {/* Day Header */}
-              <div className="flex items-center justify-between mb-3 pb-2 border-b-2 border-gray-100">
+              <div className="flex items-center justify-between mb-3 pb-2 border-b-2 border-slate-600">
                 <div>
                   <h3 className="font-bold text-gray-100 hidden lg:block">{weekDay.label}</h3>
                   <h3 className="font-bold text-gray-100 lg:hidden">{weekDay.short}</h3>
@@ -101,7 +101,7 @@ const WeekPlanner = () => {
                   onClick={() => handleClearDay(weekDay.key)}
                   data-test-id={`clear-day-${weekDay.key}`}
                   aria-label={`${weekDay.label} löschen`}
-                  className="p-1 hover:bg-red-50 rounded-lg transition-colors text-red-500"
+                  className="p-1 hover:bg-red-600/20 rounded-lg transition-colors text-red-400"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
@@ -111,7 +111,7 @@ const WeekPlanner = () => {
               <div className="space-y-3">
                 {mealsGrouped.map((mealTypeGroup) => (
                   <div key={mealTypeGroup.key}>
-                    <div className="text-xs font-medium text-gray-500 mb-1 flex items-center gap-1">
+                    <div className="text-xs font-medium text-gray-400 mb-1 flex items-center gap-1">
                       <span>{mealTypeGroup.emoji}</span>
                       <span className="hidden lg:inline">{mealTypeGroup.label}</span>
                     </div>
@@ -153,7 +153,7 @@ const WeekPlanner = () => {
                   'w-full mt-3 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center justify-center gap-2',
                   selectedDay === weekDay.key
                     ? 'bg-accent-500 text-white shadow-lg'
-                    : 'bg-gray-100 text-gray-600 hover:bg-accent-100 hover:text-accent-700'
+                    : 'bg-slate-700 text-gray-300 hover:bg-accent-600/20 hover:text-accent-400'
                 )}
               >
                 <Plus className="h-4 w-4" />
@@ -176,7 +176,7 @@ const WeekPlanner = () => {
               onClick={() => setSelectedDay(null)}
               data-test-id="close-recipe-selection"
               aria-label="Rezeptauswahl schließen"
-              className="text-gray-500 hover:text-gray-200"
+              className="text-gray-400 hover:text-gray-200"
             >
               ✕
             </button>
@@ -196,7 +196,7 @@ const WeekPlanner = () => {
                     'py-2 px-3 rounded-lg font-medium text-sm transition-all duration-200',
                     selectedMealType === mealType.key
                       ? 'bg-accent-500 text-white shadow-md'
-                      : 'bg-gray-100 text-gray-600 hover:bg-accent-100'
+                      : 'bg-slate-700 text-gray-300 hover:bg-accent-600/20 hover:text-accent-400'
                   )}
                 >
                   <span className="mr-1">{mealType.emoji}</span>
@@ -215,17 +215,17 @@ const WeekPlanner = () => {
                   onClick={() => handleAddMeal(recipe.id)}
                   data-test-id={`select-recipe-${recipe.id}`}
                   aria-label={`${recipe.title} hinzufügen`}
-                  className="bg-gradient-to-br from-primary-50 to-secondary-50 hover:from-primary-100 hover:to-secondary-100 rounded-xl p-4 text-left transition-all duration-200 hover:shadow-lg hover:scale-105 border-2 border-transparent hover:border-accent-300"
+                  className="bg-slate-700/80 hover:bg-slate-600/80 rounded-xl p-4 text-left transition-all duration-200 hover:shadow-lg hover:scale-105 border-2 border-slate-600/50 hover:border-accent-500/50"
                 >
                   <p className="font-bold text-gray-100 mb-1 line-clamp-2">{recipe.title}</p>
                   {recipe.rating && (
-                    <p className="text-xs text-gray-600">⭐ {recipe.rating}/5</p>
+                    <p className="text-xs text-gray-400">⭐ {recipe.rating}/5</p>
                   )}
                 </button>
               ))}
             </div>
           ) : (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-8 text-gray-400">
               <p>Keine Rezepte vorhanden. Füge zuerst Rezepte hinzu!</p>
             </div>
           )}
