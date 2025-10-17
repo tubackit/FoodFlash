@@ -96,9 +96,9 @@ const EditRecipeModal = ({ recipe, onSave, onClose }: EditRecipeModalProps) => {
             onClick={onClose}
             data-test-id="close-edit-modal"
             aria-label="Bearbeiten abbrechen"
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            className="p-2 hover:bg-slate-700 rounded-full transition-colors"
           >
-            <X className="h-6 w-6 text-gray-500" />
+            <X className="h-6 w-6 text-gray-300" />
           </button>
         </div>
 
@@ -114,7 +114,7 @@ const EditRecipeModal = ({ recipe, onSave, onClose }: EditRecipeModalProps) => {
               value={title}
               onChange={handleTitleChange}
               placeholder="z.B. Spaghetti Carbonara"
-              className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:outline-none transition-colors"
+              className="w-full px-4 py-2 border-2 border-gray-600 rounded-lg focus:border-primary-500 focus:outline-none transition-colors bg-slate-700 text-gray-100 placeholder-gray-400"
               required
             />
           </div>
@@ -130,7 +130,7 @@ const EditRecipeModal = ({ recipe, onSave, onClose }: EditRecipeModalProps) => {
               value={url}
               onChange={handleUrlChange}
               placeholder="https://www.youtube.com/watch?v=... (oder leer für eigenes Rezept)"
-              className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:outline-none transition-colors"
+              className="w-full px-4 py-2 border-2 border-gray-600 rounded-lg focus:border-primary-500 focus:outline-none transition-colors bg-slate-700 text-gray-100 placeholder-gray-400"
             />
           </div>
 
@@ -145,7 +145,7 @@ const EditRecipeModal = ({ recipe, onSave, onClose }: EditRecipeModalProps) => {
               onChange={handleDescriptionChange}
               placeholder="Was macht dieses Rezept besonders?"
               rows={3}
-              className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:outline-none transition-colors resize-none"
+              className="w-full px-4 py-2 border-2 border-gray-600 rounded-lg focus:border-primary-500 focus:outline-none transition-colors resize-none bg-slate-700 text-gray-100 placeholder-gray-400"
             />
           </div>
 
@@ -187,10 +187,10 @@ const EditRecipeModal = ({ recipe, onSave, onClose }: EditRecipeModalProps) => {
               value={imageUrl}
               onChange={handleImageUrlChange}
               placeholder="Google Drive oder imgbb.com Link"
-              className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:outline-none transition-colors"
+              className="w-full px-4 py-2 border-2 border-gray-600 rounded-lg focus:border-primary-500 focus:outline-none transition-colors bg-slate-700 text-gray-100 placeholder-gray-400"
             />
             {imageUrl && isGoogleDriveUrl(imageUrl) && (
-              <p className="text-xs text-green-600 mt-1">
+              <p className="text-xs text-green-400 mt-1">
                 ✅ Google Drive Link erkannt - wird automatisch konvertiert
               </p>
             )}
@@ -199,7 +199,7 @@ const EditRecipeModal = ({ recipe, onSave, onClose }: EditRecipeModalProps) => {
             {imageUrl && (
               <div className="mt-3">
                 <p className="text-xs font-medium text-gray-200 mb-1">Vorschau:</p>
-                <div className="relative w-full h-40 bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-200">
+                <div className="relative w-full h-40 bg-slate-700 rounded-lg overflow-hidden border-2 border-gray-600">
                   <img
                     src={convertGoogleDriveUrl(imageUrl)}
                     alt="Vorschau"
@@ -229,7 +229,7 @@ const EditRecipeModal = ({ recipe, onSave, onClose }: EditRecipeModalProps) => {
 
             {/* Thumbnail Help */}
             {showThumbnailHelp && (isInstagram || isFacebook || isTikTok) && (
-              <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg text-xs text-blue-700">
+              <div className="mt-3 p-3 bg-slate-700 border border-primary-500/30 rounded-lg text-xs text-gray-200">
                 <p className="font-bold mb-1">💡 Tipp:</p>
                 <p>Screenshot machen und auf <a href="https://imgbb.com" target="_blank" rel="noopener noreferrer" className="underline">imgbb.com</a> oder Google Drive hochladen</p>
               </div>
@@ -241,7 +241,7 @@ const EditRecipeModal = ({ recipe, onSave, onClose }: EditRecipeModalProps) => {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-3 rounded-lg font-medium bg-gray-100 text-gray-200 hover:bg-gray-200 transition-colors"
+              className="flex-1 py-3 rounded-lg font-medium bg-slate-700 text-gray-100 hover:bg-slate-600 transition-colors"
             >
               Abbrechen
             </button>
