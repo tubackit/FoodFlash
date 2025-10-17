@@ -109,7 +109,7 @@ const ShoppingList = () => {
           <ShoppingCart className="h-10 w-10 text-primary-500" />
           Einkaufsliste
         </h2>
-        <p className="text-gray-600">
+        <p className="text-gray-300">
           {totalCount === 0 ? (
             'Füge Artikel zu deiner Einkaufsliste hinzu'
           ) : (
@@ -141,7 +141,7 @@ const ShoppingList = () => {
               aria-label="Formular schließen"
               className="p-2 hover:bg-gray-100 rounded-full transition-colors"
             >
-              <X className="h-6 w-6 text-gray-500" />
+              <X className="h-6 w-6 text-gray-300" />
             </button>
           </div>
 
@@ -274,7 +274,7 @@ const ShoppingList = () => {
                 <h3 className="font-bold text-gray-100 mb-3 flex items-center gap-2 text-lg">
                   <span className="text-2xl">{category.emoji}</span>
                   {category.label}
-                  <span className="text-sm text-gray-500 font-normal ml-auto">
+                  <span className="text-sm text-gray-300 font-normal ml-auto">
                     {category.items.filter(i => i.checked).length}/{category.items.length}
                   </span>
                 </h3>
@@ -305,7 +305,7 @@ const ShoppingList = () => {
                         <p
                           className={clsx(
                             'font-medium',
-                            item.checked ? 'line-through text-gray-400' : 'text-gray-100'
+                            item.checked ? 'line-through text-gray-400' : 'text-gray-200'
                           )}
                         >
                           {item.name}
@@ -314,7 +314,7 @@ const ShoppingList = () => {
                           <p
                             className={clsx(
                               'text-sm',
-                              item.checked ? 'text-gray-400' : 'text-gray-600'
+                              item.checked ? 'text-gray-400' : 'text-gray-300'
                             )}
                           >
                             {item.quantity}
@@ -341,7 +341,7 @@ const ShoppingList = () => {
         <div className="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-12 text-center shadow-lg border border-dark-600/50">
           <div className="text-6xl mb-4">🛒</div>
           <h3 className="text-2xl font-bold text-gray-200 mb-2">Deine Einkaufsliste ist leer</h3>
-          <p className="text-gray-500">Füge Artikel hinzu und sie werden nach Supermarkt-Kategorien sortiert!</p>
+          <p className="text-gray-300">Füge Artikel hinzu und sie werden nach Supermarkt-Kategorien sortiert!</p>
         </div>
       )}
     </div>
