@@ -406,6 +406,16 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
                 <Trash2 className="h-4 w-4" />
               </button>
             </div>
+
+            {/* Collapse Button */}
+            <button
+              onClick={handleToggleExpand}
+              data-test-id={`collapse-recipe-${recipe.id}`}
+              aria-label="Details ausblenden"
+              className="w-full mt-4 py-2 text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors border-t border-gray-100 pt-4"
+            >
+              ▲ Weniger anzeigen
+            </button>
           </div>
         )}
 
