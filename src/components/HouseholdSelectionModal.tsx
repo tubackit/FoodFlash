@@ -23,8 +23,9 @@ const HouseholdSelectionModal = () => {
   }
 
   return (
-    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto">
-      <div className="bg-slate-800 rounded-2xl p-6 md:p-8 max-w-2xl w-full shadow-2xl border-2 border-primary-500/30 my-4 max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 overflow-y-auto">
+      <div className="min-h-screen flex items-center justify-center p-4 py-8">
+        <div className="bg-slate-800 rounded-2xl p-6 md:p-8 max-w-2xl w-full shadow-2xl border-2 border-primary-500/30 max-h-[85vh] overflow-y-auto">
         {/* Header */}
         <div className="text-center mb-4 md:mb-8">
           <div className="flex justify-center mb-3">
@@ -113,6 +114,7 @@ const HouseholdSelectionModal = () => {
         <p className="text-center text-xs text-gray-500 mt-3">
           Diese Einstellung wird auf deinem Gerät gespeichert
         </p>
+        </div>
       </div>
     </div>
   )
