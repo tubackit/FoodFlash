@@ -148,7 +148,8 @@ Alle Rezepte und Daten werden im **Browser gespeichert** (LocalStorage):
 Bei Fragen oder Problemen schaue in die anderen Dokumentations-Dateien:
 - `QUICKSTART.md` - Schnellstart-Anleitung
 - `YOUTUBE-API-SETUP.md` - YouTube API einrichten
-- `GIST-GUIDE.md` - Familie-Sharing mit Gist
+- `GIST-GUIDE.md` - Familie-Sharing mit Gist (manuell)
+- `FIREBASE-SETUP.md` - 🔥 **NEU:** Automatisches Familie-Sharing mit Firebase!
 - `README.md` - Technische Details
 
 ---
