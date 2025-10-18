@@ -174,9 +174,24 @@ Websitebeschränkungen:
 
 ❌ **Alle anderen APIs NICHT aktivieren!**
 
-**Alternative (wenn du ALLE APIs erlauben willst):**
-Falls es Probleme gibt, kannst du auch **"Schlüssel nicht einschränken"** wählen.
-Das ist weniger sicher, aber für Familien-Nutzung OK.
+**Alternative (EMPFOHLEN wenn APIs nicht sichtbar sind):**
+
+Falls die oben genannten APIs nicht in deiner Liste erscheinen:
+
+1. Wähle bei **"API-Einschränkungen"**: **⭕ "Schlüssel nicht einschränken"**
+
+**Warum ist das OK?**
+- ✅ Die HTTP-Referrer (Domain-Beschränkungen) schützen bereits!
+- ✅ Nur deine erlaubten Domains können zugreifen
+- ✅ Für Familien-Nutzung völlig ausreichend
+- ✅ Keine Probleme mit fehlenden oder falsch benannten APIs
+
+**Was du siehst:** Möglicherweise andere Firebase-APIs wie:
+- Cloud Storage API
+- Firebase Management API
+- Firebase Installations API
+
+**Das ist in Ordnung!** Firebase aktiviert automatisch die APIs, die es braucht.
 
 ---
 
@@ -336,6 +351,7 @@ npm run dev:mobile
 3. Klicke auf deinen API-Key
 4. Du solltest sehen:
 
+**Option A: Mit API-Einschränkungen (wenn APIs sichtbar sind)**
 ```
 Anwendungsbeschränkungen
 Art: HTTP-Referrer
@@ -351,6 +367,21 @@ APIs:
   ✓ Cloud Firestore API
   ✓ Identity Toolkit API
   ✓ Token Service API
+```
+
+**Option B: Ohne API-Einschränkungen (EMPFOHLEN)**
+```
+Anwendungsbeschränkungen
+Art: HTTP-Referrer
+Websites:
+  http://localhost:5173/*
+  http://127.0.0.1:5173/*
+  http://192.168.0.0/16
+  https://tubackit.github.io/*
+
+API-Einschränkungen
+Art: Schlüssel nicht einschränken
+  (Alle APIs erlaubt - OK wegen HTTP-Referrer-Schutz!)
 ```
 
 ### Prüfe Firestore Rules:
