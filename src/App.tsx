@@ -1,15 +1,28 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import RecipeList from './components/RecipeList'
 import WeekPlanner from './components/WeekPlanner'
 import ShoppingList from './components/ShoppingList'
 import { Platform } from './types/recipe'
+import { migrateLocalDataToFirebase } from './utils/migrateToFirebase'
 
 // Dark theme version
 function App() {
   const [activeTab, setActiveTab] = useState<'home' | 'recipes' | 'planner' | 'shopping'>('home')
   const [platformFilter, setPlatformFilter] = useState<Platform | null>(null)
+
+  // Migriere localStorage-Daten zu Firebase beim ersten Laden
+  useEffect(() => {
+    const migrate = async () => {
+      try {
+        await migrateLocalDataToFirebase()
+      } catch (error) {
+        console.error('Migration fehlgeschlagen:', error)
+      }
+    }
+    migrate()
+  }, [])
 
   const handlePlatformClick = (platform: Platform) => {
     setPlatformFilter(platform)
