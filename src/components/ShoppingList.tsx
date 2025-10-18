@@ -30,6 +30,11 @@ const ShoppingList = () => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     if (!itemName.trim()) return
+    
+    if (!currentHousehold) {
+      alert('❌ Bitte wähle zuerst einen Haushalt aus!')
+      return
+    }
 
     addItem(itemName, selectedCategory, itemQuantity)
     setItemName('')
@@ -105,11 +110,26 @@ const ShoppingList = () => {
 
   return (
     <div className="max-w-4xl mx-auto">
+      {/* No Household Warning */}
+      {!currentHousehold && (
+        <div className="bg-red-900/30 border-2 border-red-500 rounded-xl p-6 mb-6 text-center">
+          <p className="text-red-200 text-lg font-bold mb-2">
+            ⚠️ Kein Haushalt gewählt!
+          </p>
+          <p className="text-red-300 text-sm">
+            Bitte wähle zuerst einen Haushalt aus, um die Einkaufsliste zu nutzen.
+          </p>
+        </div>
+      )}
+
       {/* Header */}
       <div className="text-center mb-8">
         <h2 className="text-4xl font-bold text-gray-100 mb-2 flex items-center justify-center gap-3">
           <ShoppingCart className="h-10 w-10 text-primary-500" />
           Einkaufsliste
+          {currentHousehold && (
+            <span className="text-lg text-gray-400">({currentHousehold.icon} {currentHousehold.name})</span>
+          )}
         </h2>
         <p className="text-gray-300">
           {isLoading ? (
