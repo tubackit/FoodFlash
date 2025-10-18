@@ -108,11 +108,7 @@ export const migrateLocalDataToFirebase = async () => {
   }
 }
 
-async function migrateRecipes() {
-  // Diese Funktion wird nicht mehr direkt verwendet
-  // Logik ist jetzt in migrateLocalDataToFirebase integriert
-  console.log('ℹ️ migrateRecipes() ist deprecated')
-}
+// migrateRecipes ist jetzt in migrateLocalDataToFirebase integriert
 
 async function migrateShoppingList() {
   const shoppingJson = localStorage.getItem('foodflash_shopping')
