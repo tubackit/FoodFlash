@@ -56,7 +56,11 @@ Du siehst jetzt die Einstellungen für diesen API-Key.
 
 #### C) Klicke auf **"+ ELEMENT HINZUFÜGEN"** (oder "+ ADD AN ITEM")
 
-#### D) Füge **GENAU** diese 5 Einträge hinzu:
+#### D) Füge **GENAU** diese Einträge hinzu:
+
+**⚠️ WICHTIG:** Google Cloud akzeptiert NICHT alle Wildcards!
+
+**DIESE FUNKTIONIEREN:** ✅
 
 ```
 http://localhost:5173/*
@@ -64,33 +68,42 @@ http://localhost:5173/*
 👆 Für lokale Entwicklung (Standard Vite Port)
 
 ```
-http://localhost:*/*
+http://localhost:3000/*
 ```
-👆 Für alle anderen lokalen Ports
+👆 Für lokale Entwicklung (alternativer Port)
 
 ```
-http://192.168.*:*/*
+http://localhost:4173/*
 ```
-👆 Für mobile Entwicklung im lokalen Netzwerk
+👆 Für Vite Preview
+
+```
+http://192.168.0.0/16
+```
+👆 Für ALLE 192.168.x.x Adressen (mobiles Netzwerk)
 
 ```
 https://tubackit.github.io/*
 ```
-👆 Für deine GitHub Pages Domain
+👆 Für deine GitHub Pages Domain (ALLE Subpfade)
 
-```
-https://tubackit.github.io/FoodFlash/*
-```
-👆 Speziell für deine FoodFlash App
-
-**So sollte es aussehen:**
+**MINIMUM (wenn du nur 3 Einträge haben willst):**
 ```
 Websitebeschränkungen:
 ✓ http://localhost:5173/*
-✓ http://localhost:*/*
-✓ http://192.168.*:*/*
+✓ http://192.168.0.0/16
 ✓ https://tubackit.github.io/*
-✓ https://tubackit.github.io/FoodFlash/*
+```
+
+**EMPFOHLEN (wenn du sicher gehen willst):**
+```
+Websitebeschränkungen:
+✓ http://localhost:5173/*
+✓ http://localhost:3000/*
+✓ http://localhost:4173/*
+✓ http://127.0.0.1:5173/*
+✓ http://192.168.0.0/16
+✓ https://tubackit.github.io/*
 ```
 
 ---
@@ -103,21 +116,67 @@ Websitebeschränkungen:
 #### B) Wähle: **"Schlüssel einschränken"** 
 (oder "Restrict key")
 
-#### C) Aktiviere NUR diese APIs:
+#### C) APIs aktivieren (falls noch nicht sichtbar)
 
-Suche und aktiviere (✅):
+**Problem:** Du siehst die APIs nicht in der Liste? Das ist normal! 
+
+**Lösung:** Du musst sie erst im Projekt aktivieren!
+
+##### C.1) APIs aktivieren - Schritt für Schritt:
+
+1. **Öffne einen neuen Tab** in deinem Browser
+2. Gehe zu: **https://console.cloud.google.com/apis/library**
+3. Stelle sicher, dass **foodflash-46a42** als Projekt ausgewählt ist (oben in der Leiste)
+
+##### C.2) Cloud Firestore API aktivieren:
+
+1. In das Suchfeld eingeben: `Firestore`
+2. Klicke auf: **"Cloud Firestore API"**
+3. Falls ein **"AKTIVIEREN"** Button da ist → Klicke drauf
+4. Falls **"API AKTIVIERT"** oder **"VERWALTEN"** da steht → ✅ Bereits aktiv!
+
+##### C.3) Identity Toolkit API aktivieren:
+
+1. Zurück zur API-Bibliothek: https://console.cloud.google.com/apis/library
+2. In das Suchfeld eingeben: `Identity Toolkit`
+3. Klicke auf: **"Identity Toolkit API"**
+4. Falls ein **"AKTIVIEREN"** Button da ist → Klicke drauf
+5. Falls **"API AKTIVIERT"** da steht → ✅ Bereits aktiv!
+
+##### C.4) Token Service API aktivieren:
+
+1. Zurück zur API-Bibliothek: https://console.cloud.google.com/apis/library
+2. In das Suchfeld eingeben: `Token Service`
+3. Klicke auf: **"Token Service API"**
+4. Falls ein **"AKTIVIEREN"** Button da ist → Klicke drauf
+5. Falls **"API AKTIVIERT"** da steht → ✅ Bereits aktiv!
+
+⏰ **Warte 1-2 Minuten** nachdem du die APIs aktiviert hast!
+
+#### D) Zurück zu den API-Key Einschränkungen
+
+1. Gehe zurück zum Tab mit deinen **Anmeldedaten**
+2. Oder öffne: https://console.cloud.google.com/apis/credentials
+3. Klicke wieder auf deinen **API-Key**
+4. Scrolle zu **"API-Einschränkungen"**
+5. Wähle: **"Schlüssel einschränken"**
+
+#### E) Jetzt sollten die APIs sichtbar sein!
+
+**Suche und aktiviere (✅) NUR diese:**
 ```
 ✅ Cloud Firestore API
-✅ Identity Toolkit API
+✅ Identity Toolkit API  
 ✅ Token Service API
 ```
 
-Alle anderen APIs sollten **NICHT** aktiviert sein! ❌
+**Tipp:** Nutze die Suchfunktion in der API-Liste!
 
-**Wichtig:** Wenn du eine API nicht findest:
-- Klicke auf "APIs aktivieren" (oder "Enable APIs")
-- Suche nach "Firestore" oder "Identity Toolkit"
-- Aktiviere sie zuerst
+❌ **Alle anderen APIs NICHT aktivieren!**
+
+**Alternative (wenn du ALLE APIs erlauben willst):**
+Falls es Probleme gibt, kannst du auch **"Schlüssel nicht einschränken"** wählen.
+Das ist weniger sicher, aber für Familien-Nutzung OK.
 
 ---
 
@@ -247,6 +306,19 @@ npm run dev:mobile
 ### **Problem: Funktioniert nur manchmal**
 **Lösung:** Lösche Browser-Cache und starte neu
 
+### **Problem: "Ungültig" bei Wildcard-Eingabe**
+**Fehler:** `http://localhost:*/*` oder `http://192.168.*:*/*`
+
+**Lösung:** Google Cloud akzeptiert diese Wildcards NICHT! Benutze stattdessen:
+- ✅ `http://localhost:5173/*` (spezifischer Port)
+- ✅ `http://192.168.0.0/16` (CIDR-Notation für alle 192.168.x.x)
+
+**Erlaubte Formate:**
+- ✅ `http://example.com/*` (Wildcard am Ende)
+- ✅ `http://192.168.0.0/16` (CIDR-Notation für IP-Bereiche)
+- ❌ `http://example.*` (Wildcard in der Mitte - NICHT erlaubt)
+- ❌ `http://localhost:*/*` (Wildcard für Port - NICHT erlaubt)
+
 ### **Problem: Eine API fehlt in der Liste**
 **Lösung:** 
 1. Gehe zu "APIs aktivieren"
@@ -269,10 +341,9 @@ Anwendungsbeschränkungen
 Art: HTTP-Referrer
 Websites:
   http://localhost:5173/*
-  http://localhost:*/*
-  http://192.168.*:*/*
+  http://127.0.0.1:5173/*
+  http://192.168.0.0/16
   https://tubackit.github.io/*
-  https://tubackit.github.io/FoodFlash/*
 
 API-Einschränkungen
 Art: Schlüssel einschränken
