@@ -8,7 +8,7 @@ export interface Household {
 export const DEFAULT_HOUSEHOLDS: Household[] = [
   {
     id: 'household1',
-    name: 'Haushalt 1',
+    name: 'Tubacki',
     icon: '🏠',
     color: 'bg-blue-600',
   },
