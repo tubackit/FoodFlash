@@ -41,7 +41,7 @@ function App() {
         <HouseholdSelectionModal />
         <Header activeTab={activeTab} setActiveTab={setActiveTab} />
         
-        <main className="container mx-auto px-4 py-8">
+        <main className="container mx-auto px-4 py-8 pb-16 sm:pb-8">
           {activeTab === 'home' && <Hero onPlatformClick={handlePlatformClick} />}
           {activeTab === 'recipes' && (
             <RecipeList 

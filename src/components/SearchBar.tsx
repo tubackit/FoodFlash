@@ -27,7 +27,7 @@ const SearchBar = ({ searchTerm, onSearchChange }: SearchBarProps) => {
         onChange={handleInputChange}
         data-test-id="search-recipes"
         aria-label="Rezepte suchen"
-        placeholder="Suche nach Rezepten, Beschreibung oder Plattform..."
+        placeholder="Suche nach Rezepten..."
         className={clsx(
           'w-full pl-12 pr-12 py-3 rounded-full border-2 border-gray-600',
           'focus:border-primary-500 focus:outline-none transition-colors',

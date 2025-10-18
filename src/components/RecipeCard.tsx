@@ -141,7 +141,7 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
         className="w-full"
       >
         {(recipe.uploadedImageUrl || recipe.imageUrl) ? (
-          <div className="h-48 overflow-hidden bg-gradient-to-br from-primary-100 to-secondary-100 relative">
+          <div className="h-40 sm:h-48 overflow-hidden bg-gradient-to-br from-primary-100 to-secondary-100 relative">
             <img
               src={recipe.uploadedImageUrl || recipe.imageUrl}
               alt={recipe.title}
@@ -163,7 +163,7 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
             )}
           </div>
         ) : (
-          <div className="h-48 bg-gradient-to-br from-primary-100 via-secondary-100 to-accent-100 flex items-center justify-center relative">
+          <div className="h-40 sm:h-48 bg-gradient-to-br from-primary-100 via-secondary-100 to-accent-100 flex items-center justify-center relative">
             <Icon className="h-16 w-16 text-white opacity-50" />
             <div className="absolute bottom-2 right-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded-full">
               {isExpanded ? '▼ Weniger' : '▶ Mehr'}
