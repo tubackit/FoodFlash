@@ -11,7 +11,7 @@ import { exportRecipes, importRecipes } from '../utils/exportImport'
 import { loadFromGist, validateGistUrl } from '../utils/gistSync'
 import { SHOW_SYNC_BUTTON } from '../config/gist'
 import { YouTubeVideo } from '../services/youtube'
-import { forceCleanupRecipeData } from '../utils/cleanupOldData'
+import { forceCleanupRecipeData, deletePizzaRecipeDirectly } from '../utils/cleanupOldData'
 import clsx from 'clsx'
 
 interface RecipeListProps {
@@ -247,19 +247,33 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
         })} />
       </div>
 
-      {/* Cleanup Button for debugging */}
-      <div className="mb-6 text-center">
-        <button
-          onClick={() => {
-            if (confirm('🧹 Alte Daten bereinigen und Seite neu laden?\n\nDies kann helfen, wenn Rezepte nicht gelöscht werden können.')) {
-              forceCleanupRecipeData()
-            }
-          }}
-          className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors text-sm flex items-center gap-2 mx-auto"
-        >
-          <X className="h-4 w-4" />
-          Alte Daten bereinigen
-        </button>
+      {/* Debug Buttons */}
+      <div className="mb-6 text-center space-y-2">
+        <div className="flex gap-2 justify-center flex-wrap">
+          <button
+            onClick={() => {
+              if (confirm('🍕 Pizzarezept direkt aus Firebase löschen?\n\nDies umgeht alle Konflikte und löscht das Rezept sofort.')) {
+                deletePizzaRecipeDirectly()
+              }
+            }}
+            className="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors text-sm flex items-center gap-2"
+          >
+            <X className="h-4 w-4" />
+            Pizzarezept löschen
+          </button>
+          
+          <button
+            onClick={() => {
+              if (confirm('🧹 Alte Daten bereinigen und Seite neu laden?\n\nDies kann helfen, wenn Rezepte nicht gelöscht werden können.')) {
+                forceCleanupRecipeData()
+              }
+            }}
+            className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors text-sm flex items-center gap-2"
+          >
+            <X className="h-4 w-4" />
+            Alte Daten bereinigen
+          </button>
+        </div>
       </div>
 
       {/* Family Sync Button */}
