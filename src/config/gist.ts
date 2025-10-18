@@ -12,5 +12,6 @@ export const FAMILY_GIST_URL = 'https://gist.github.com/tubackit/ab2aa98a3c0fd46
 export const AUTO_SYNC_ON_START = false
 
 // Zeige Sync-Button prominent in der App?
-export const SHOW_SYNC_BUTTON = true
+// Mit Firebase nicht mehr nötig - automatische Sync!
+export const SHOW_SYNC_BUTTON = false
 

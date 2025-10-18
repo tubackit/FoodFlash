@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodFlash Migration Debug</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .info-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .error-box {
+            background: #fff0f0;
+            border-left: 4px solid #e74c3c;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .success-box {
+            background: #f0fff4;
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 5px;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 13px;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        .stat {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin: 5px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 FoodFlash Migration Debug Tool</h1>
+        <p style="color: #666;">Diagnose-Tool für Migration-Probleme</p>
+
+        <div class="info-box">
+            <strong>📋 Anleitung:</strong>
+            <ol>
+                <li>Öffne die FoodFlash App in einem anderen Tab</li>
+                <li>Klicke auf die Buttons unten um den Status zu prüfen</li>
+                <li>Führe bei Bedarf die Migration durch</li>
+            </ol>
+        </div>
+
+        <div style="margin: 20px 0;">
+            <button onclick="checkLocalStorage()">1️⃣ localStorage prüfen</button>
+            <button onclick="checkFirebase()">2️⃣ Firebase prüfen</button>
+            <button onclick="runMigration()">3️⃣ Migration durchführen</button>
+            <button onclick="clearResults()">🗑️ Ausgabe löschen</button>
+        </div>
+
+        <div id="results" class="result"></div>
+    </div>
+
+    <script>
+        const resultsDiv = document.getElementById('results');
+
+        function clearResults() {
+            resultsDiv.innerHTML = '';
+        }
+
+        function addResult(html) {
+            resultsDiv.innerHTML += html;
+            resultsDiv.scrollTop = resultsDiv.scrollHeight;
+        }
+
+        function checkLocalStorage() {
+            clearResults();
+            addResult('<h3>📦 localStorage Analyse</h3>');
+
+            try {
+                const recipesJson = localStorage.getItem('foodflash_recipes');
+                
+                if (!recipesJson) {
+                    addResult('<div class="info-box">ℹ️ Keine Rezepte in localStorage gefunden</div>');
+                    return;
+                }
+
+                const recipes = JSON.parse(recipesJson);
+                addResult(`<div class="success-box">✅ ${recipes.length} Rezepte in localStorage gefunden</div>`);
+
+                // Show first 3 recipes
+                addResult('<h4>📝 Erste 3 Rezepte:</h4>');
+                recipes.slice(0, 3).forEach((recipe, idx) => {
+                    addResult(`
+                        <div class="info-box">
+                            <strong>${idx + 1}. ${recipe.title}</strong><br>
+                            ID: <code>${recipe.id}</code><br>
+                            URL: ${recipe.url || '(keine)'}<br>
+                            Platform: ${recipe.platform}<br>
+                            Rating: ${recipe.rating || 'keine'} ⭐<br>
+                            Ingredients: ${recipe.ingredients?.length || 0}<br>
+                            Created: ${new Date(recipe.createdAt).toLocaleString('de-DE')}
+                        </div>
+                    `);
+                });
+
+                // Show all IDs
+                addResult('<h4>🆔 Alle Rezept-IDs:</h4>');
+                addResult('<pre>' + recipes.map(r => r.id).join('\n') + '</pre>');
+
+            } catch (error) {
+                addResult(`<div class="error-box">❌ Fehler: ${error.message}</div>`);
+            }
+        }
+
+        async function checkFirebase() {
+            addResult('<h3>🔥 Firebase Analyse</h3>');
+            addResult('<div class="info-box">⏳ Verbinde mit Firebase...</div>');
+
+            try {
+                // This needs to be run in the FoodFlash app context
+                if (typeof window.FoodFlash === 'undefined') {
+                    addResult(`
+                        <div class="error-box">
+                            ❌ window.FoodFlash ist nicht verfügbar!<br><br>
+                            <strong>Lösung:</strong><br>
+                            1. Öffne die FoodFlash App<br>
+                            2. Öffne dort die Browser-Console (F12)<br>
+                            3. Führe aus: <code>await window.FoodFlash.checkMigrationStatus()</code>
+                        </div>
+                    `);
+                    return;
+                }
+
+                const status = await window.FoodFlash.checkMigrationStatus();
+                
+                addResult(`
+                    <div class="${status.needsMigration ? 'error-box' : 'success-box'}">
+                        <h4>📊 Migration Status:</h4>
+                        <div class="stat">localStorage: ${status.localCount} Rezepte</div>
+                        <div class="stat">Firebase: ${status.firebaseCount} Rezepte</div>
+                        <div class="stat">Nicht migriert: ${status.unmigrated} Rezepte</div>
+                        <div class="stat">Migration nötig: ${status.needsMigration ? 'JA ⚠️' : 'NEIN ✅'}</div>
+                    </div>
+                `);
+
+            } catch (error) {
+                addResult(`<div class="error-box">❌ Fehler: ${error.message}</div>`);
+            }
+        }
+
+        async function runMigration() {
+            addResult('<h3>🔄 Migration wird durchgeführt...</h3>');
+
+            try {
+                if (typeof window.FoodFlash === 'undefined') {
+                    addResult(`
+                        <div class="error-box">
+                            ❌ window.FoodFlash ist nicht verfügbar!<br><br>
+                            <strong>Manuelle Lösung:</strong><br>
+                            1. Öffne die FoodFlash App<br>
+                            2. Öffne die Browser-Console (F12)<br>
+                            3. Führe aus: <code>await window.FoodFlash.forceReMigration()</code><br>
+                            4. Aktualisiere die Seite mit F5
+                        </div>
+                    `);
+                    return;
+                }
+
+                const beforeStatus = await window.FoodFlash.checkMigrationStatus();
+                addResult(`<div class="info-box">Vor Migration: ${beforeStatus.firebaseCount} Rezepte in Firebase</div>`);
+
+                await window.FoodFlash.forceReMigration();
+
+                const afterStatus = await window.FoodFlash.checkMigrationStatus();
+                addResult(`
+                    <div class="success-box">
+                        ✅ Migration abgeschlossen!<br>
+                        Nach Migration: ${afterStatus.firebaseCount} Rezepte in Firebase<br>
+                        ${afterStatus.firebaseCount - beforeStatus.firebaseCount} Rezepte wurden migriert
+                    </div>
+                `);
+
+                addResult(`
+                    <div class="info-box">
+                        <strong>⚠️ Wichtig:</strong><br>
+                        Aktualisiere jetzt die FoodFlash App mit F5!
+                    </div>
+                `);
+
+            } catch (error) {
+                addResult(`<div class="error-box">❌ Fehler: ${error.message}</div>`);
+            }
+        }
+
+        // Auto-check localStorage on load
+        window.addEventListener('load', () => {
+            checkLocalStorage();
+        });
+    </script>
+</body>
+</html>
+

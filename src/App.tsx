@@ -6,7 +6,7 @@ import WeekPlanner from './components/WeekPlanner'
 import ShoppingList from './components/ShoppingList'
 import HouseholdSelectionModal from './components/HouseholdSelectionModal'
 import { Platform } from './types/recipe'
-import { migrateLocalDataToFirebase } from './utils/migrateToFirebase'
+import { migrateLocalDataToFirebase, forceReMigration, checkMigrationStatus } from './utils/migrateToFirebase'
 import { HouseholdProvider } from './contexts/HouseholdContext'
 
 // Dark theme version
@@ -18,12 +18,40 @@ function App() {
   useEffect(() => {
     const migrate = async () => {
       try {
+        console.log('🔄 Starte Migration und Bereinigung...')
+        
+        // 1. Migration durchführen
         await migrateLocalDataToFirebase()
+        
+        // 2. Überprüfen, ob Migration abgeschlossen ist
+        const status = await checkMigrationStatus()
+        console.log('📊 Migration-Status:', status)
+        
+        // 3. Migration löscht jetzt automatisch localStorage
+        // Kein manueller Reload mehr nötig - Firebase-Listener übernimmt
+        
       } catch (error) {
         console.error('Migration fehlgeschlagen:', error)
       }
     }
     migrate()
+
+    // Mache Migration-Tools global verfügbar für Debugging
+    // @ts-expect-error - Globale Funktionen für Debugging
+    window.FoodFlash = {
+      forceReMigration,
+      checkMigrationStatus,
+      version: '2.0.0',
+      clearLocalStorage: () => {
+        localStorage.removeItem('foodflash_recipes')
+        localStorage.removeItem('foodflash_migrated_to_firebase')
+        console.log('✅ localStorage gelöscht - bitte Seite neu laden (F5)')
+      }
+    }
+    console.log('🍂 FoodFlash geladen! Verfügbare Debugging-Tools:')
+    console.log('  - window.FoodFlash.forceReMigration() - Migration erneut durchführen')
+    console.log('  - window.FoodFlash.checkMigrationStatus() - Migration-Status überprüfen')
+    console.log('  - window.FoodFlash.clearLocalStorage() - localStorage löschen')
   }, [])
 
   const handlePlatformClick = (platform: Platform) => {

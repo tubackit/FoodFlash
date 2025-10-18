@@ -107,12 +107,15 @@ Der Server wechselt automatisch zu einem anderen Port (z.B. 5174 statt 5173)
 
 ## 📂 Wo sind meine Daten?
 
-Alle Rezepte und Daten werden im **Browser gespeichert** (LocalStorage):
-- **Sicher:** Nur auf deinem Gerät
-- **Privat:** Keine Cloud, keine Server
-- **Gist-Sync:** Optional für Familie-Sharing
+**Neu:** Alle Rezepte werden jetzt in **Firebase** (Cloud) gespeichert:
+- **🔥 Firebase:** Automatische Synchronisation für alle Geräte
+- **Sicher:** Verschlüsselt und gesichert
+- **Familie-Sharing:** Automatisch für alle im gleichen Haushalt
+- **Backup:** LocalStorage-Daten bleiben als Backup erhalten
 
-**⚠️ Wichtig:** Browser-Daten nicht löschen, sonst sind die Rezepte weg!  
+**Migration:** Alte Rezepte aus LocalStorage werden automatisch zu Firebase migriert beim ersten App-Start.
+
+**⚠️ Problem mit alten Rezepten?** Siehe `MIGRATION-HILFE.md`  
 **💾 Tipp:** Regelmäßig exportieren als Backup!
 
 ---

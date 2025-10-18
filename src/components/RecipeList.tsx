@@ -19,7 +19,13 @@ interface RecipeListProps {
 }
 
 const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
-  const { recipes, addRecipe, deleteRecipe, updateRecipe, isLoading } = useFirebaseRecipes()
+  // Firebase aktiviert für Multi-User Support
+  const { recipes, addRecipe, deleteRecipe, updateRecipe, isLoading, error } = useFirebaseRecipes()
+  
+  // Zeige Warnung wenn Firebase nicht erreichbar ist
+  if (error && recipes.length === 0) {
+    console.warn('⚠️ Firebase-Fehler:', error)
+  }
   const [searchTerm, setSearchTerm] = useState('')
   const [showImportDialog, setShowImportDialog] = useState(false)
   const [importMode, setImportMode] = useState<'merge' | 'replace'>('merge')

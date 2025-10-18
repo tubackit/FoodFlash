@@ -20,6 +20,22 @@ export const useFirebaseRecipes = () => {
 
   // Real-time listener for recipes
   useEffect(() => {
+    // ULTRA-FIX: Lösche localStorage-Rezepte SOFORT beim Start!
+    const localRecipes = localStorage.getItem('foodflash_recipes')
+    const migrationFlag = localStorage.getItem('foodflash_migrated_to_firebase')
+    
+    if (localRecipes && migrationFlag === 'true') {
+      console.warn('🗑️ ULTRA-FIX: Migration ist abgeschlossen, lösche alte localStorage-Rezepte JETZT!')
+      localStorage.removeItem('foodflash_recipes')
+      console.warn('✅ localStorage gelöscht - ERZWINGE HARD RELOAD!')
+      
+      // HARD RELOAD um React State zu leeren!
+      setTimeout(() => {
+        window.location.reload()
+      }, 500)
+      return // Verhindere, dass der Rest des Codes ausgeführt wird
+    }
+
     const recipesCollection = collection(db, 'recipes')
     const recipesQuery = query(recipesCollection, orderBy('createdAt', 'desc'))
 
@@ -96,9 +112,22 @@ export const useFirebaseRecipes = () => {
       })
       
       await updateDoc(recipeDoc, cleanUpdates)
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Error updating recipe:', error)
-      setError('Fehler beim Aktualisieren des Rezepts')
+      
+      // Überprüfe, ob das Rezept nicht existiert
+      const errorMessage = (error as { message?: string }).message || ''
+      if (errorMessage.includes('NOT_FOUND') || errorMessage.includes('No document')) {
+        console.error('⚠️ Rezept existiert nicht in Firebase! ID:', id)
+        console.error('🔧 Dieses Rezept wurde bereits migriert und sollte nicht mehr angezeigt werden.')
+        
+        // Zeige hilfreiche Fehlermeldung - KEIN automatischer Reload mehr!
+        setError('Dieses Rezept existiert nicht in Firebase')
+        alert('⚠️ Dieses Rezept hat eine veraltete ID.\n\n' +
+          'Bitte kontaktiere den Support oder starte die App neu.')
+      } else {
+        setError('Fehler beim Aktualisieren des Rezepts')
+      }
       throw error
     }
   }

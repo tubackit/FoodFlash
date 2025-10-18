@@ -1,7 +1,8 @@
-import { Zap, Home, BookOpen, Calendar, ShoppingCart, ChevronDown } from 'lucide-react'
+import { Zap, Home, BookOpen, Calendar, ShoppingCart, ChevronDown, RefreshCw } from 'lucide-react'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { useHousehold } from '../contexts/HouseholdContext'
+import { forceReMigration, checkMigrationStatus } from '../utils/migrateToFirebase'
 
 interface HeaderProps {
   activeTab: 'home' | 'recipes' | 'planner' | 'shopping'
@@ -11,6 +12,41 @@ interface HeaderProps {
 const Header = ({ activeTab, setActiveTab }: HeaderProps) => {
   const { currentHousehold, households, setCurrentHousehold } = useHousehold()
   const [showHouseholdDropdown, setShowHouseholdDropdown] = useState(false)
+  const [isMigrating, setIsMigrating] = useState(false)
+
+  const handleMigration = async () => {
+    if (isMigrating) return
+    
+    setIsMigrating(true)
+    try {
+      // Überprüfe erst den Status
+      const status = await checkMigrationStatus()
+      
+      if (status.needsMigration) {
+        const confirmMsg = `📦 Migration erforderlich:\n\n` +
+          `• localStorage: ${status.localCount} Rezepte\n` +
+          `• Firebase: ${status.firebaseCount} Rezepte\n` +
+          `• Noch zu migrieren: ${status.unmigrated} Rezepte\n\n` +
+          `Möchtest du die Migration jetzt durchführen?`
+        
+        if (confirm(confirmMsg)) {
+          await forceReMigration()
+          alert('✅ Migration abgeschlossen!\n\nBitte aktualisiere die Seite (F5) um die Änderungen zu sehen.')
+          window.location.reload()
+        }
+      } else {
+        alert(`✅ Alle Rezepte sind bereits migriert!\n\n` +
+          `• localStorage: ${status.localCount} Rezepte\n` +
+          `• Firebase: ${status.firebaseCount} Rezepte\n` +
+          `• Keine Migration nötig`)
+      }
+    } catch (error) {
+      console.error('Migration error:', error)
+      alert('❌ Migration fehlgeschlagen. Bitte überprüfe die Browser-Console.')
+    } finally {
+      setIsMigrating(false)
+    }
+  }
 
   return (
     <header className="bg-slate-800/95 backdrop-blur-sm shadow-2xl border-b-2 border-primary-600/50 autumn-glow">
@@ -90,6 +126,26 @@ const Header = ({ activeTab, setActiveTab }: HeaderProps) => {
                 )}
               </div>
             )}
+
+            {/* Migration Button */}
+            <button
+              onClick={handleMigration}
+              data-test-id="migration-button"
+              aria-label="Rezepte zu Firebase migrieren"
+              disabled={isMigrating}
+              className={clsx(
+                'flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 sm:py-2 rounded-lg border transition-all text-xs sm:text-sm font-medium',
+                isMigrating
+                  ? 'bg-gray-700/50 border-gray-600 text-gray-400 cursor-not-allowed'
+                  : 'bg-blue-600/20 border-blue-500 text-blue-300 hover:bg-blue-600/30 hover:text-blue-200'
+              )}
+              title="Alte Rezepte aus localStorage zu Firebase migrieren"
+            >
+              <RefreshCw className={clsx('h-3 w-3 sm:h-4 sm:w-4', isMigrating && 'animate-spin')} />
+              <span className="hidden lg:inline">
+                {isMigrating ? 'Migriere...' : 'Migration'}
+              </span>
+            </button>
           </div>
 
           {/* Navigation */}
