@@ -26,7 +26,7 @@ const Header = ({ activeTab, setActiveTab }: HeaderProps) => {
                 />
                 <div className="absolute -top-1 -right-1 w-3 h-3 bg-accent-400 rounded-full animate-pulse autumn-glow-gold"></div>
               </div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-primary-400 via-secondary-400 to-accent-400 bg-clip-text text-transparent">
+              <h1 className="text-xl sm:text-3xl font-bold bg-gradient-to-r from-primary-400 via-secondary-400 to-accent-400 bg-clip-text text-transparent">
                 🍂 Food Flash
               </h1>
             </div>
@@ -38,13 +38,13 @@ const Header = ({ activeTab, setActiveTab }: HeaderProps) => {
                   onClick={() => setShowHouseholdDropdown(!showHouseholdDropdown)}
                   data-test-id="household-selector"
                   aria-label="Haushalt wechseln"
-                  className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-700/80 border border-slate-600 hover:border-primary-500 transition-all text-gray-200 hover:text-primary-300"
+                  className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 sm:py-2 rounded-lg bg-slate-700/80 border border-slate-600 hover:border-primary-500 transition-all text-gray-200 hover:text-primary-300"
                 >
                   <span className="text-lg">{currentHousehold.icon}</span>
                   <span className="hidden md:inline text-sm font-medium">
                     {currentHousehold.name}
                   </span>
-                  <ChevronDown className="h-4 w-4" />
+                  <ChevronDown className="h-3 w-3 sm:h-4 sm:w-4" />
                 </button>
 
                 {/* Dropdown */}
@@ -93,20 +93,20 @@ const Header = ({ activeTab, setActiveTab }: HeaderProps) => {
           </div>
 
           {/* Navigation */}
-          <nav className="flex gap-2">
+          <nav className="flex gap-1 sm:gap-2">
             <button
               onClick={() => setActiveTab('home')}
               data-test-id="nav-home"
               aria-label="Zur Startseite navigieren"
               className={clsx(
-                'flex items-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-200',
+                'flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-full font-medium transition-all duration-200',
                 activeTab === 'home'
                   ? 'bg-primary-600 text-white shadow-lg scale-105 autumn-glow'
                   : 'bg-slate-700/50 text-gray-300 hover:bg-primary-600/20 hover:text-primary-300 border border-slate-600/50'
               )}
             >
-              <Home className="h-5 w-5" />
-              <span className="hidden sm:inline">🏠 Start</span>
+              <Home className="h-4 w-4 sm:h-5 sm:w-5" />
+              <span className="hidden lg:inline">🏠 Start</span>
             </button>
 
             <button
@@ -114,14 +114,14 @@ const Header = ({ activeTab, setActiveTab }: HeaderProps) => {
               data-test-id="nav-recipes"
               aria-label="Zu meinen Rezepten navigieren"
               className={clsx(
-                'flex items-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-200',
+                'flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-full font-medium transition-all duration-200',
                 activeTab === 'recipes'
                   ? 'bg-secondary-600 text-white shadow-lg scale-105 autumn-glow-green'
                   : 'bg-slate-700/50 text-gray-300 hover:bg-secondary-600/20 hover:text-secondary-300 border border-dark-600/50'
               )}
             >
-              <BookOpen className="h-5 w-5" />
-              <span className="hidden sm:inline">📖 Rezepte</span>
+              <BookOpen className="h-4 w-4 sm:h-5 sm:w-5" />
+              <span className="hidden lg:inline">📖 Rezepte</span>
             </button>
 
             <button
@@ -129,14 +129,14 @@ const Header = ({ activeTab, setActiveTab }: HeaderProps) => {
               data-test-id="nav-planner"
               aria-label="Zum Wochenplaner navigieren"
               className={clsx(
-                'flex items-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-200',
+                'flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-full font-medium transition-all duration-200',
                 activeTab === 'planner'
                   ? 'bg-accent-600 text-white shadow-lg scale-105 autumn-glow-gold'
                   : 'bg-slate-700/50 text-gray-300 hover:bg-accent-600/20 hover:text-accent-300 border border-dark-600/50'
               )}
             >
-              <Calendar className="h-5 w-5" />
-              <span className="hidden sm:inline">📅 Planer</span>
+              <Calendar className="h-4 w-4 sm:h-5 sm:w-5" />
+              <span className="hidden lg:inline">📅 Planer</span>
             </button>
 
             <button
@@ -144,14 +144,14 @@ const Header = ({ activeTab, setActiveTab }: HeaderProps) => {
               data-test-id="nav-shopping"
               aria-label="Zur Einkaufsliste navigieren"
               className={clsx(
-                'flex items-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-200',
+                'flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-full font-medium transition-all duration-200',
                 activeTab === 'shopping'
                   ? 'bg-primary-600 text-white shadow-lg scale-105 autumn-glow'
                   : 'bg-slate-700/50 text-gray-300 hover:bg-primary-600/20 hover:text-primary-300 border border-slate-600/50'
               )}
             >
-              <ShoppingCart className="h-5 w-5" />
-              <span className="hidden sm:inline">🛒 Einkauf</span>
+              <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
+              <span className="hidden lg:inline">🛒 Einkauf</span>
             </button>
           </nav>
         </div>
