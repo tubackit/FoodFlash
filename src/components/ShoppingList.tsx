@@ -3,6 +3,7 @@ import { ShoppingCart, Plus, Trash2, CheckCircle2, Circle, X, Share2, Copy } fro
 import { useFirebaseShoppingList } from '../hooks/useFirebaseShoppingList'
 import { ShoppingCategory } from '../types/shopping'
 import { formatShoppingListForWhatsApp } from '../utils/shoppingListFormatter'
+import { useHousehold } from '../contexts/HouseholdContext'
 import clsx from 'clsx'
 
 const categories: { key: ShoppingCategory; label: string; emoji: string }[] = [
@@ -19,7 +20,8 @@ const categories: { key: ShoppingCategory; label: string; emoji: string }[] = [
 ]
 
 const ShoppingList = () => {
-  const { items, addItem, toggleItem, removeItem, clearCheckedItems, clearAllItems, isLoading } = useFirebaseShoppingList()
+  const { currentHousehold } = useHousehold()
+  const { items, addItem, toggleItem, removeItem, clearCheckedItems, clearAllItems, isLoading } = useFirebaseShoppingList(currentHousehold?.id)
   const [isAdding, setIsAdding] = useState(false)
   const [itemName, setItemName] = useState('')
   const [itemQuantity, setItemQuantity] = useState('')

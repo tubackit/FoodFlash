@@ -8,8 +8,8 @@ import { WeekDay, MealPlan } from '../types/planner'
 type WeekPlanData = Record<WeekDay, { meals: MealPlan[] }>
 import { useFirebaseRecipes } from './useFirebaseRecipes'
 
-export const useWeekPlannerAdapter = () => {
-  const firebaseHooks = useFirebaseWeekPlanner()
+export const useWeekPlannerAdapter = (householdId?: string) => {
+  const firebaseHooks = useFirebaseWeekPlanner(householdId)
   const { recipes } = useFirebaseRecipes()
 
   // Convert Firebase format to local format

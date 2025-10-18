@@ -22,14 +22,20 @@ export interface DayPlan {
   meals: PlannedMeal[]
 }
 
-export const useFirebaseWeekPlanner = () => {
+export const useFirebaseWeekPlanner = (householdId?: string) => {
   const [weekPlan, setWeekPlan] = useState<DayPlan[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   // Real-time listener for week planner
   useEffect(() => {
-    const weekPlannerCollection = collection(db, 'weekPlanner')
+    if (!householdId) {
+      setIsLoading(false)
+      return
+    }
+
+    const weekPlannerPath = `households/${householdId}/weekPlanner`
+    const weekPlannerCollection = collection(db, weekPlannerPath)
 
     const unsubscribe = onSnapshot(
       weekPlannerCollection,
@@ -55,7 +61,7 @@ export const useFirebaseWeekPlanner = () => {
     )
 
     return () => unsubscribe()
-  }, [])
+  }, [householdId])
 
   // Add meal to a specific day
   const addMealToDay = async (
@@ -64,8 +70,11 @@ export const useFirebaseWeekPlanner = () => {
     recipeTitle: string,
     mealType: MealType
   ) => {
+    if (!householdId) return
+
     try {
-      const dayDoc = doc(db, 'weekPlanner', date)
+      const weekPlannerPath = `households/${householdId}/weekPlanner`
+      const dayDoc = doc(db, weekPlannerPath, date)
       
       // Find existing day plan or create new one
       const existingDay = weekPlan.find((d) => d.date === date)
@@ -87,13 +96,16 @@ export const useFirebaseWeekPlanner = () => {
 
   // Remove meal from a specific day
   const removeMealFromDay = async (date: string, mealIndex: number) => {
+    if (!householdId) return
+
     try {
       const existingDay = weekPlan.find((d) => d.date === date)
       if (!existingDay) return
 
       const meals = existingDay.meals.filter((_, index) => index !== mealIndex)
       
-      const dayDoc = doc(db, 'weekPlanner', date)
+      const weekPlannerPath = `households/${householdId}/weekPlanner`
+      const dayDoc = doc(db, weekPlannerPath, date)
       
       if (meals.length === 0) {
         // If no meals left, delete the document
@@ -114,8 +126,11 @@ export const useFirebaseWeekPlanner = () => {
 
   // Clear all meals for a specific day
   const clearDay = async (date: string) => {
+    if (!householdId) return
+
     try {
-      const dayDoc = doc(db, 'weekPlanner', date)
+      const weekPlannerPath = `households/${householdId}/weekPlanner`
+      const dayDoc = doc(db, weekPlannerPath, date)
       await deleteDoc(dayDoc)
     } catch (error) {
       console.error('Error clearing day:', error)
@@ -126,9 +141,12 @@ export const useFirebaseWeekPlanner = () => {
 
   // Clear entire week plan
   const clearWeekPlan = async () => {
+    if (!householdId) return
+
     try {
+      const weekPlannerPath = `households/${householdId}/weekPlanner`
       const deletePromises = weekPlan.map((day) =>
-        deleteDoc(doc(db, 'weekPlanner', day.date))
+        deleteDoc(doc(db, weekPlannerPath, day.date))
       )
       await Promise.all(deletePromises)
     } catch (error) {

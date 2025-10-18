@@ -4,8 +4,10 @@ import Hero from './components/Hero'
 import RecipeList from './components/RecipeList'
 import WeekPlanner from './components/WeekPlanner'
 import ShoppingList from './components/ShoppingList'
+import HouseholdSelectionModal from './components/HouseholdSelectionModal'
 import { Platform } from './types/recipe'
 import { migrateLocalDataToFirebase } from './utils/migrateToFirebase'
+import { HouseholdProvider } from './contexts/HouseholdContext'
 
 // Dark theme version
 function App() {
@@ -34,21 +36,24 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen">
-      <Header activeTab={activeTab} setActiveTab={setActiveTab} />
-      
-      <main className="container mx-auto px-4 py-8">
-        {activeTab === 'home' && <Hero onPlatformClick={handlePlatformClick} />}
-        {activeTab === 'recipes' && (
-          <RecipeList 
-            platformFilter={platformFilter} 
-            onClearFilter={handleClearFilter}
-          />
-        )}
-        {activeTab === 'planner' && <WeekPlanner />}
-        {activeTab === 'shopping' && <ShoppingList />}
-      </main>
-    </div>
+    <HouseholdProvider>
+      <div className="min-h-screen">
+        <HouseholdSelectionModal />
+        <Header activeTab={activeTab} setActiveTab={setActiveTab} />
+        
+        <main className="container mx-auto px-4 py-8">
+          {activeTab === 'home' && <Hero onPlatformClick={handlePlatformClick} />}
+          {activeTab === 'recipes' && (
+            <RecipeList 
+              platformFilter={platformFilter} 
+              onClearFilter={handleClearFilter}
+            />
+          )}
+          {activeTab === 'planner' && <WeekPlanner />}
+          {activeTab === 'shopping' && <ShoppingList />}
+        </main>
+      </div>
+    </HouseholdProvider>
   )
 }
 

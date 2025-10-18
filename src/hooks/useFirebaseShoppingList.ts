@@ -22,14 +22,20 @@ export interface ShoppingListItem {
   addedAt: string
 }
 
-export const useFirebaseShoppingList = () => {
+export const useFirebaseShoppingList = (householdId?: string) => {
   const [items, setItems] = useState<ShoppingListItem[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   // Real-time listener for shopping list
   useEffect(() => {
-    const shoppingListCollection = collection(db, 'shoppingList')
+    if (!householdId) {
+      setIsLoading(false)
+      return
+    }
+
+    const shoppingListPath = `households/${householdId}/shoppingList`
+    const shoppingListCollection = collection(db, shoppingListPath)
     const shoppingListQuery = query(shoppingListCollection, orderBy('addedAt', 'desc'))
 
     const unsubscribe = onSnapshot(
@@ -57,7 +63,7 @@ export const useFirebaseShoppingList = () => {
     )
 
     return () => unsubscribe()
-  }, [])
+  }, [householdId])
 
   // Add item to shopping list
   const addItem = async (
@@ -65,8 +71,11 @@ export const useFirebaseShoppingList = () => {
     category: string,
     quantity?: string
   ) => {
+    if (!householdId) return
+
     try {
-      const shoppingListCollection = collection(db, 'shoppingList')
+      const shoppingListPath = `households/${householdId}/shoppingList`
+      const shoppingListCollection = collection(db, shoppingListPath)
       await addDoc(shoppingListCollection, {
         name,
         quantity: quantity || '',
@@ -83,11 +92,14 @@ export const useFirebaseShoppingList = () => {
 
   // Toggle item checked status
   const toggleItem = async (id: string) => {
+    if (!householdId) return
+
     try {
       const item = items.find((i) => i.id === id)
       if (!item) return
 
-      const itemDoc = doc(db, 'shoppingList', id)
+      const shoppingListPath = `households/${householdId}/shoppingList`
+      const itemDoc = doc(db, shoppingListPath, id)
       await updateDoc(itemDoc, {
         checked: !item.checked,
       })
@@ -100,8 +112,11 @@ export const useFirebaseShoppingList = () => {
 
   // Remove item from shopping list
   const removeItem = async (id: string) => {
+    if (!householdId) return
+
     try {
-      const itemDoc = doc(db, 'shoppingList', id)
+      const shoppingListPath = `households/${householdId}/shoppingList`
+      const itemDoc = doc(db, shoppingListPath, id)
       await deleteDoc(itemDoc)
     } catch (error) {
       console.error('Error removing item:', error)
@@ -112,9 +127,12 @@ export const useFirebaseShoppingList = () => {
 
   // Clear all items
   const clearAllItems = async () => {
+    if (!householdId) return
+
     try {
+      const shoppingListPath = `households/${householdId}/shoppingList`
       const deletePromises = items.map((item) =>
-        deleteDoc(doc(db, 'shoppingList', item.id))
+        deleteDoc(doc(db, shoppingListPath, item.id))
       )
       await Promise.all(deletePromises)
     } catch (error) {
@@ -126,10 +144,13 @@ export const useFirebaseShoppingList = () => {
 
   // Clear checked items
   const clearCheckedItems = async () => {
+    if (!householdId) return
+
     try {
+      const shoppingListPath = `households/${householdId}/shoppingList`
       const checkedItems = items.filter((item) => item.checked)
       const deletePromises = checkedItems.map((item) =>
-        deleteDoc(doc(db, 'shoppingList', item.id))
+        deleteDoc(doc(db, shoppingListPath, item.id))
       )
       await Promise.all(deletePromises)
     } catch (error) {

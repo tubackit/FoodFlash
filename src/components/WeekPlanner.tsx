@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Calendar, Plus, Trash2, ChefHat } from 'lucide-react'
 import { useWeekPlannerAdapter } from '../hooks/useWeekPlannerAdapter'
 import { useFirebaseRecipes } from '../hooks/useFirebaseRecipes'
+import { useHousehold } from '../contexts/HouseholdContext'
 import { WeekDay, MealPlan } from '../types/planner'
 import clsx from 'clsx'
 
@@ -23,7 +24,8 @@ const mealTypes: { key: MealPlan['mealType']; label: string; emoji: string }[] =
 ]
 
 const WeekPlanner = () => {
-  const { weekPlan, addMealToDay, removeMealFromDay, clearDay, clearWeek, isLoading } = useWeekPlannerAdapter()
+  const { currentHousehold } = useHousehold()
+  const { weekPlan, addMealToDay, removeMealFromDay, clearDay, clearWeek, isLoading } = useWeekPlannerAdapter(currentHousehold?.id)
   const { recipes } = useFirebaseRecipes()
   const [selectedDay, setSelectedDay] = useState<WeekDay | null>(null)
   const [selectedMealType, setSelectedMealType] = useState<MealPlan['mealType']>('lunch')
