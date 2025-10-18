@@ -138,10 +138,10 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
         onClick={handleToggleExpand}
         className="w-full"
       >
-        {recipe.imageUrl ? (
+        {(recipe.uploadedImageUrl || recipe.imageUrl) ? (
           <div className="h-48 overflow-hidden bg-gradient-to-br from-primary-100 to-secondary-100 relative">
             <img
-              src={recipe.imageUrl}
+              src={recipe.uploadedImageUrl || recipe.imageUrl}
               alt={recipe.title}
               className="w-full h-full object-cover"
               onError={(e) => {
@@ -153,6 +153,12 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
             <div className="absolute bottom-2 right-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded-full">
               {isExpanded ? '▼ Weniger' : '▶ Mehr'}
             </div>
+            {/* Uploaded image badge */}
+            {recipe.uploadedImageUrl && (
+              <div className="absolute top-2 left-2 bg-green-600 text-white text-xs px-2 py-1 rounded-full font-medium flex items-center gap-1">
+                📸 Eigenes Foto
+              </div>
+            )}
           </div>
         ) : (
           <div className="h-48 bg-gradient-to-br from-primary-100 via-secondary-100 to-accent-100 flex items-center justify-center relative">

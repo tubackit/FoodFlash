@@ -1,10 +1,12 @@
 import { useState, FormEvent, ChangeEvent, useEffect } from 'react'
-import { Plus, X, Sparkles, HelpCircle } from 'lucide-react'
+import { Plus, X, Sparkles, HelpCircle, Upload, Trash2 } from 'lucide-react'
 import clsx from 'clsx'
 import { Recipe, Ingredient } from '../types/recipe'
 import { detectPlatform } from '../utils/platformDetector'
 import { extractYouTubeThumbnail, canAutoExtractThumbnail } from '../utils/thumbnailExtractor'
 import { convertGoogleDriveUrl, isGoogleDriveUrl } from '../utils/googleDriveHelper'
+import { validateImageFile } from '../utils/imageCompression'
+import { uploadRecipeImage } from '../utils/firebaseImageUpload'
 import IngredientsInput from './IngredientsInput'
 
 interface AddRecipeFormProps {
@@ -19,8 +21,11 @@ const AddRecipeForm = ({ onAdd }: AddRecipeFormProps) => {
   const [imageUrl, setImageUrl] = useState('')
   const [ingredients, setIngredients] = useState<Ingredient[]>([])
   const [showThumbnailHelp, setShowThumbnailHelp] = useState(false)
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null)
+  const [uploadedImagePreview, setUploadedImagePreview] = useState<string | null>(null)
+  const [isUploading, setIsUploading] = useState(false)
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     if (!title.trim()) {
@@ -28,24 +33,43 @@ const AddRecipeForm = ({ onAdd }: AddRecipeFormProps) => {
       return
     }
 
-    const platform = detectPlatform(url)
+    setIsUploading(true)
 
-    onAdd({
-      title: title.trim(),
-      url: url.trim() || '',
-      description: description.trim(),
-      imageUrl: imageUrl.trim() || undefined,
-      ingredients,
-      platform,
-    })
+    try {
+      const platform = detectPlatform(url)
+      let uploadedImageUrl: string | undefined
 
-    // Reset form
-    setTitle('')
-    setUrl('')
-    setDescription('')
-    setImageUrl('')
-    setIngredients([])
-    setIsOpen(false)
+      // Upload image if file selected
+      if (uploadedFile) {
+        const tempId = crypto.randomUUID()
+        uploadedImageUrl = await uploadRecipeImage(uploadedFile, tempId)
+      }
+
+      onAdd({
+        title: title.trim(),
+        url: url.trim() || '',
+        description: description.trim(),
+        imageUrl: imageUrl.trim() || undefined,
+        uploadedImageUrl,
+        ingredients,
+        platform,
+      })
+
+      // Reset form
+      setTitle('')
+      setUrl('')
+      setDescription('')
+      setImageUrl('')
+      setIngredients([])
+      setUploadedFile(null)
+      setUploadedImagePreview(null)
+      setIsOpen(false)
+    } catch (error) {
+      console.error('Fehler beim Speichern:', error)
+      alert('Fehler beim Hochladen des Bildes!')
+    } finally {
+      setIsUploading(false)
+    }
   }
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -88,6 +112,31 @@ const AddRecipeForm = ({ onAdd }: AddRecipeFormProps) => {
 
   const handleToggleThumbnailHelp = () => {
     setShowThumbnailHelp(!showThumbnailHelp)
+  }
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    // Validiere Datei
+    const validation = validateImageFile(file)
+    if (validation !== true) {
+      alert(validation)
+      return
+    }
+
+    // Setze File und erstelle Preview
+    setUploadedFile(file)
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      setUploadedImagePreview(reader.result as string)
+    }
+    reader.readAsDataURL(file)
+  }
+
+  const handleRemoveUploadedImage = () => {
+    setUploadedFile(null)
+    setUploadedImagePreview(null)
   }
 
   const canAutoFill = canAutoExtractThumbnail(url)
@@ -185,6 +234,66 @@ const AddRecipeForm = ({ onAdd }: AddRecipeFormProps) => {
 
         {/* Ingredients Input */}
         <IngredientsInput ingredients={ingredients} onChange={setIngredients} />
+
+        {/* Image Upload Section */}
+        <div className="border-2 border-dashed border-primary-500/30 rounded-xl p-4 bg-slate-700/30">
+          <div className="flex items-center justify-between mb-3">
+            <label className="block text-sm font-medium text-gray-200">
+              📸 Eigenes Foto hochladen (optional)
+            </label>
+            <span className="text-xs text-gray-400">Max. 10 MB</span>
+          </div>
+
+          {!uploadedImagePreview ? (
+            <div>
+              <input
+                id="recipe-image-upload"
+                type="file"
+                accept="image/jpeg,image/jpg,image/png,image/webp"
+                onChange={handleFileChange}
+                data-test-id="recipe-image-upload"
+                aria-label="Bild hochladen"
+                className="hidden"
+              />
+              <label
+                htmlFor="recipe-image-upload"
+                className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-600 rounded-lg cursor-pointer hover:border-primary-500 hover:bg-slate-600/30 transition-all"
+              >
+                <Upload className="h-8 w-8 text-gray-400 mb-2" />
+                <span className="text-sm font-medium text-gray-300 mb-1">
+                  Klicke hier oder ziehe ein Bild rein
+                </span>
+                <span className="text-xs text-gray-500">
+                  JPEG, PNG oder WebP • Wird automatisch komprimiert
+                </span>
+              </label>
+            </div>
+          ) : (
+            <div className="relative">
+              <img
+                src={uploadedImagePreview}
+                alt="Vorschau"
+                className="w-full h-48 object-cover rounded-lg"
+              />
+              <button
+                type="button"
+                onClick={handleRemoveUploadedImage}
+                data-test-id="remove-uploaded-image"
+                aria-label="Hochgeladenes Bild entfernen"
+                className="absolute top-2 right-2 p-2 bg-red-600 hover:bg-red-700 text-white rounded-full shadow-lg transition-colors"
+              >
+                <Trash2 className="h-4 w-4" />
+              </button>
+              <div className="absolute bottom-2 left-2 bg-green-600 text-white text-xs px-2 py-1 rounded-full font-medium">
+                ✓ Bereit zum Upload
+              </div>
+            </div>
+          )}
+
+          <p className="text-xs text-gray-400 mt-2 text-center">
+            💡 <strong>Hybrid-Lösung:</strong> Du kannst sowohl ein eigenes Foto hochladen als auch eine YouTube-URL unten angeben!
+          </p>
+        </div>
 
         {/* Image URL Input */}
         <div>
@@ -339,15 +448,17 @@ const AddRecipeForm = ({ onAdd }: AddRecipeFormProps) => {
         {/* Submit Button */}
         <button
           type="submit"
+          disabled={isUploading}
           data-test-id="submit-recipe"
           aria-label="Rezept speichern"
           className={clsx(
             'w-full py-3 rounded-lg font-bold text-white transition-all duration-200',
-            'bg-gradient-to-r from-primary-500 to-secondary-500',
-            'hover:shadow-lg hover:scale-105'
+            isUploading
+              ? 'bg-gray-600 cursor-not-allowed'
+              : 'bg-gradient-to-r from-primary-500 to-secondary-500 hover:shadow-lg hover:scale-105'
           )}
         >
-          Rezept speichern ⚡
+          {isUploading ? '⏳ Bild wird hochgeladen...' : 'Rezept speichern ⚡'}
         </button>
       </form>
     </div>

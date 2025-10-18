@@ -17,7 +17,8 @@ export interface Recipe {
   url: string
   platform: Platform
   description: string
-  imageUrl?: string
+  imageUrl?: string // YouTube thumbnail or manual URL
+  uploadedImageUrl?: string // Firebase Storage uploaded image
   notes?: string
   ingredients: Ingredient[]
   rating?: number // 1-5 stars
