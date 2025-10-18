@@ -58,12 +58,23 @@ export const useFirebaseRecipes = () => {
   const addRecipe = async (recipe: Omit<Recipe, 'id' | 'createdAt'>) => {
     try {
       const recipesCollection = collection(db, 'recipes')
-      await addDoc(recipesCollection, {
+      
+      // Remove undefined values (Firestore doesn't accept them)
+      const cleanRecipe: Record<string, unknown> = {
         ...recipe,
         createdAt: serverTimestamp(),
         ingredients: recipe.ingredients || [],
         comments: recipe.comments || [],
+      }
+      
+      // Remove undefined fields
+      Object.keys(cleanRecipe).forEach(key => {
+        if (cleanRecipe[key] === undefined) {
+          delete cleanRecipe[key]
+        }
       })
+      
+      await addDoc(recipesCollection, cleanRecipe)
     } catch (error) {
       console.error('Error adding recipe:', error)
       setError('Fehler beim Hinzufügen des Rezepts')
@@ -75,7 +86,16 @@ export const useFirebaseRecipes = () => {
   const updateRecipe = async (id: string, updates: Partial<Recipe>) => {
     try {
       const recipeDoc = doc(db, 'recipes', id)
-      await updateDoc(recipeDoc, updates)
+      
+      // Remove undefined values (Firestore doesn't accept them)
+      const cleanUpdates: Record<string, unknown> = { ...updates }
+      Object.keys(cleanUpdates).forEach(key => {
+        if (cleanUpdates[key] === undefined) {
+          delete cleanUpdates[key]
+        }
+      })
+      
+      await updateDoc(recipeDoc, cleanUpdates)
     } catch (error) {
       console.error('Error updating recipe:', error)
       setError('Fehler beim Aktualisieren des Rezepts')
