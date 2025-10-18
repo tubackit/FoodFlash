@@ -93,20 +93,20 @@ const Header = ({ activeTab, setActiveTab }: HeaderProps) => {
           </div>
 
           {/* Navigation */}
-          <nav className="flex gap-1 sm:gap-2">
+          <nav className="flex gap-0.5 sm:gap-2">
             <button
               onClick={() => setActiveTab('home')}
               data-test-id="nav-home"
               aria-label="Zur Startseite navigieren"
               className={clsx(
-                'flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-full font-medium transition-all duration-200',
+                'flex items-center justify-center px-1.5 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-full font-medium transition-all duration-200 min-w-[32px] sm:min-w-0',
                 activeTab === 'home'
                   ? 'bg-primary-600 text-white shadow-lg scale-105 autumn-glow'
                   : 'bg-slate-700/50 text-gray-300 hover:bg-primary-600/20 hover:text-primary-300 border border-slate-600/50'
               )}
             >
               <Home className="h-4 w-4 sm:h-5 sm:w-5" />
-              <span className="hidden lg:inline">🏠 Start</span>
+              <span className="hidden xl:inline ml-2">🏠 Start</span>
             </button>
 
             <button
@@ -114,14 +114,14 @@ const Header = ({ activeTab, setActiveTab }: HeaderProps) => {
               data-test-id="nav-recipes"
               aria-label="Zu meinen Rezepten navigieren"
               className={clsx(
-                'flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-full font-medium transition-all duration-200',
+                'flex items-center justify-center px-1.5 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-full font-medium transition-all duration-200 min-w-[32px] sm:min-w-0',
                 activeTab === 'recipes'
                   ? 'bg-secondary-600 text-white shadow-lg scale-105 autumn-glow-green'
                   : 'bg-slate-700/50 text-gray-300 hover:bg-secondary-600/20 hover:text-secondary-300 border border-dark-600/50'
               )}
             >
               <BookOpen className="h-4 w-4 sm:h-5 sm:w-5" />
-              <span className="hidden lg:inline">📖 Rezepte</span>
+              <span className="hidden xl:inline ml-2">📖 Rezepte</span>
             </button>
 
             <button
@@ -129,14 +129,14 @@ const Header = ({ activeTab, setActiveTab }: HeaderProps) => {
               data-test-id="nav-planner"
               aria-label="Zum Wochenplaner navigieren"
               className={clsx(
-                'flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-full font-medium transition-all duration-200',
+                'flex items-center justify-center px-1.5 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-full font-medium transition-all duration-200 min-w-[32px] sm:min-w-0',
                 activeTab === 'planner'
                   ? 'bg-accent-600 text-white shadow-lg scale-105 autumn-glow-gold'
                   : 'bg-slate-700/50 text-gray-300 hover:bg-accent-600/20 hover:text-accent-300 border border-dark-600/50'
               )}
             >
               <Calendar className="h-4 w-4 sm:h-5 sm:w-5" />
-              <span className="hidden lg:inline">📅 Planer</span>
+              <span className="hidden xl:inline ml-2">📅 Planer</span>
             </button>
 
             <button
@@ -144,14 +144,14 @@ const Header = ({ activeTab, setActiveTab }: HeaderProps) => {
               data-test-id="nav-shopping"
               aria-label="Zur Einkaufsliste navigieren"
               className={clsx(
-                'flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-full font-medium transition-all duration-200',
+                'flex items-center justify-center px-1.5 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-full font-medium transition-all duration-200 min-w-[32px] sm:min-w-0',
                 activeTab === 'shopping'
                   ? 'bg-primary-600 text-white shadow-lg scale-105 autumn-glow'
                   : 'bg-slate-700/50 text-gray-300 hover:bg-primary-600/20 hover:text-primary-300 border border-slate-600/50'
               )}
             >
               <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
-              <span className="hidden lg:inline">🛒 Einkauf</span>
+              <span className="hidden xl:inline ml-2">🛒 Einkauf</span>
             </button>
           </nav>
         </div>
