@@ -1,4 +1,12 @@
-import { ShoppingItem, ShoppingCategory } from '../types/shopping'
+import { ShoppingCategory } from '../types/shopping'
+
+// Generic item type that works with both local and Firebase items
+interface FormattableShoppingItem {
+  name: string
+  quantity?: string
+  category: ShoppingCategory
+  checked: boolean
+}
 
 const categoryLabels: Record<ShoppingCategory, { label: string; emoji: string }> = {
   produce: { label: 'Obst & Gemüse', emoji: '🥬' },
@@ -26,7 +34,7 @@ const categoryOrder: ShoppingCategory[] = [
   'household',
 ]
 
-export const formatShoppingListForWhatsApp = (items: ShoppingItem[]): string => {
+export const formatShoppingListForWhatsApp = (items: FormattableShoppingItem[]): string => {
   if (items.length === 0) {
     return '🛒 Einkaufsliste ist leer'
   }
@@ -61,7 +69,7 @@ export const formatShoppingListForWhatsApp = (items: ShoppingItem[]): string => 
   return text
 }
 
-export const formatShoppingListWithChecked = (items: ShoppingItem[]): string => {
+export const formatShoppingListWithChecked = (items: FormattableShoppingItem[]): string => {
   if (items.length === 0) {
     return '🛒 Einkaufsliste ist leer'
   }

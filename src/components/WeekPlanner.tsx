@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Calendar, Plus, Trash2, ChefHat } from 'lucide-react'
-import { useWeekPlanner } from '../hooks/useWeekPlanner'
-import { useRecipes } from '../hooks/useRecipes'
+import { useWeekPlannerAdapter } from '../hooks/useWeekPlannerAdapter'
+import { useFirebaseRecipes } from '../hooks/useFirebaseRecipes'
 import { WeekDay, MealPlan } from '../types/planner'
 import clsx from 'clsx'
 
@@ -23,8 +23,8 @@ const mealTypes: { key: MealPlan['mealType']; label: string; emoji: string }[] =
 ]
 
 const WeekPlanner = () => {
-  const { weekPlan, addMealToDay, removeMealFromDay, clearDay, clearWeek } = useWeekPlanner()
-  const { recipes } = useRecipes()
+  const { weekPlan, addMealToDay, removeMealFromDay, clearDay, clearWeek, isLoading } = useWeekPlannerAdapter()
+  const { recipes } = useFirebaseRecipes()
   const [selectedDay, setSelectedDay] = useState<WeekDay | null>(null)
   const [selectedMealType, setSelectedMealType] = useState<MealPlan['mealType']>('lunch')
 
@@ -66,7 +66,9 @@ const WeekPlanner = () => {
           <Calendar className="h-10 w-10 text-accent-500" />
           Wochenplaner
         </h2>
-        <p className="text-gray-600 mb-4">Plane deine Mahlzeiten für die Woche</p>
+        <p className="text-gray-400 mb-4">
+          {isLoading ? '🔄 Synchronisiere mit der Cloud...' : 'Plane deine Mahlzeiten für die Woche'}
+        </p>
         <button
           onClick={handleClearWeek}
           data-test-id="clear-week"
@@ -80,10 +82,10 @@ const WeekPlanner = () => {
       {/* Week Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-4 mb-8">
         {weekDays.map((weekDay) => {
-          const dayMeals = weekPlan.days[weekDay.key]
+          const dayMeals = weekPlan.days[weekDay.key].meals
           const mealsGrouped = mealTypes.map((mealType) => ({
             ...mealType,
-            meals: dayMeals.filter((m) => m.mealType === mealType.key),
+            meals: dayMeals.filter((m: MealPlan) => m.mealType === mealType.key),
           }))
 
           return (
@@ -116,7 +118,7 @@ const WeekPlanner = () => {
                       <span className="hidden lg:inline">{mealTypeGroup.label}</span>
                     </div>
                     <div className="space-y-1">
-                      {mealTypeGroup.meals.map((meal, idx) => {
+                      {mealTypeGroup.meals.map((meal: MealPlan, idx: number) => {
                         const recipe = getRecipeById(meal.recipeId)
                         if (!recipe) return null
 

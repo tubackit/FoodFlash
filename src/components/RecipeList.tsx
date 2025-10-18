@@ -1,4 +1,4 @@
-import { useRecipes } from '../hooks/useRecipes'
+import { useFirebaseRecipes } from '../hooks/useFirebaseRecipes'
 import AddRecipeForm from './AddRecipeForm'
 import RecipeCard from './RecipeCard'
 import SearchBar from './SearchBar'
@@ -19,7 +19,7 @@ interface RecipeListProps {
 }
 
 const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
-  const { recipes, addRecipe, deleteRecipe, updateRecipe } = useRecipes()
+  const { recipes, addRecipe, deleteRecipe, updateRecipe, isLoading } = useFirebaseRecipes()
   const [searchTerm, setSearchTerm] = useState('')
   const [showImportDialog, setShowImportDialog] = useState(false)
   const [importMode, setImportMode] = useState<'merge' | 'replace'>('merge')
@@ -196,6 +196,10 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
       description: video.description.slice(0, 200), // Limit description
       imageUrl: video.thumbnail,
       platform: 'youtube',
+      ingredients: [],
+      comments: [],
+      rating: undefined,
+      notes: '',
     })
     setShowYouTubeSearch(false)
   }
@@ -234,7 +238,12 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
 
       {/* Add Recipe Form */}
       <div className="mb-8">
-        <AddRecipeForm onAdd={addRecipe} />
+        <AddRecipeForm onAdd={(recipe) => addRecipe({ 
+          ...recipe, 
+          ingredients: recipe.ingredients || [],
+          comments: [], 
+          rating: undefined 
+        })} />
       </div>
 
       {/* Family Sync Button */}
@@ -509,8 +518,19 @@ const RecipeList = ({ platformFilter, onClearFilter }: RecipeListProps) => {
         </div>
       )}
 
-      {/* Recipe Grid */}
-      {recipes.length > 0 ? (
+      {/* Loading State */}
+      {isLoading ? (
+        <div className="bg-slate-800/80 rounded-2xl p-12 text-center shadow-lg">
+          <div className="text-6xl mb-4 animate-pulse">🔄</div>
+          <h3 className="text-2xl font-bold text-gray-200 mb-2">
+            Lade Rezepte...
+          </h3>
+          <p className="text-gray-400">
+            Synchronisiere mit der Cloud ☁️
+          </p>
+        </div>
+      ) : /* Recipe Grid */
+      recipes.length > 0 ? (
         filteredRecipes.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredRecipes.map((recipe) => (

@@ -4,7 +4,7 @@ import { Recipe, Platform, Comment } from '../types/recipe'
 import { useState, ChangeEvent, FormEvent } from 'react'
 import StarRating from './StarRating'
 import EditRecipeModal from './EditRecipeModal'
-import { useShoppingList } from '../hooks/useShoppingList'
+import { useFirebaseShoppingList } from '../hooks/useFirebaseShoppingList'
 import { detectIngredientCategory } from '../utils/ingredientCategoryDetector'
 
 interface RecipeCardProps {
@@ -31,7 +31,7 @@ const RecipeCard = ({ recipe, onDelete, onUpdate }: RecipeCardProps) => {
   const [commentText, setCommentText] = useState('')
   const [showEditModal, setShowEditModal] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
-  const { addItem } = useShoppingList()
+  const { addItem } = useFirebaseShoppingList()
 
   const handleDelete = () => {
     if (confirm(`Möchtest du "${recipe.title}" wirklich löschen?`)) {

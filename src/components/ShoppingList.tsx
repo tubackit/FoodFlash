@@ -1,6 +1,6 @@
 import { useState, FormEvent, ChangeEvent } from 'react'
 import { ShoppingCart, Plus, Trash2, CheckCircle2, Circle, X, Share2, Copy } from 'lucide-react'
-import { useShoppingList } from '../hooks/useShoppingList'
+import { useFirebaseShoppingList } from '../hooks/useFirebaseShoppingList'
 import { ShoppingCategory } from '../types/shopping'
 import { formatShoppingListForWhatsApp } from '../utils/shoppingListFormatter'
 import clsx from 'clsx'
@@ -19,7 +19,7 @@ const categories: { key: ShoppingCategory; label: string; emoji: string }[] = [
 ]
 
 const ShoppingList = () => {
-  const { items, addItem, toggleItem, deleteItem, clearChecked, clearAll } = useShoppingList()
+  const { items, addItem, toggleItem, removeItem, clearCheckedItems, clearAllItems, isLoading } = useFirebaseShoppingList()
   const [isAdding, setIsAdding] = useState(false)
   const [itemName, setItemName] = useState('')
   const [itemQuantity, setItemQuantity] = useState('')
@@ -52,18 +52,18 @@ const ShoppingList = () => {
   }
 
   const handleDeleteItem = (id: string) => {
-    deleteItem(id)
+    removeItem(id)
   }
 
   const handleClearChecked = () => {
     if (confirm('Möchtest du alle abgehakten Artikel löschen?')) {
-      clearChecked()
+      clearCheckedItems()
     }
   }
 
   const handleClearAll = () => {
     if (confirm('Möchtest du die gesamte Einkaufsliste löschen?')) {
-      clearAll()
+      clearAllItems()
     }
   }
 
@@ -110,7 +110,9 @@ const ShoppingList = () => {
           Einkaufsliste
         </h2>
         <p className="text-gray-300">
-          {totalCount === 0 ? (
+          {isLoading ? (
+            '🔄 Synchronisiere mit der Cloud...'
+          ) : totalCount === 0 ? (
             'Füge Artikel zu deiner Einkaufsliste hinzu'
           ) : (
             <>
