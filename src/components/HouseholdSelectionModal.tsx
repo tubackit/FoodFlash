@@ -23,30 +23,30 @@ const HouseholdSelectionModal = () => {
   }
 
   return (
-    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-      <div className="bg-slate-800 rounded-2xl p-8 max-w-2xl w-full shadow-2xl border-2 border-primary-500/30">
+    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto">
+      <div className="bg-slate-800 rounded-2xl p-6 md:p-8 max-w-2xl w-full shadow-2xl border-2 border-primary-500/30 my-4 max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
-            <div className="p-4 bg-primary-600/20 rounded-full">
-              <Home className="h-12 w-12 text-primary-500" />
+        <div className="text-center mb-4 md:mb-8">
+          <div className="flex justify-center mb-3">
+            <div className="p-3 bg-primary-600/20 rounded-full">
+              <Home className="h-8 w-8 md:h-12 md:w-12 text-primary-500" />
             </div>
           </div>
-          <h2 className="text-3xl font-bold text-gray-100 mb-2">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-100 mb-2">
             Willkommen bei FoodFlash! 🎉
           </h2>
-          <p className="text-gray-300 text-lg">
+          <p className="text-gray-300 text-base md:text-lg">
             Welcher Haushalt bist du?
           </p>
-          <p className="text-gray-400 text-sm mt-2">
+          <p className="text-gray-400 text-xs md:text-sm mt-2">
             Jeder Haushalt hat seine eigene Einkaufsliste und Wochenplanung.
-            <br />
-            Rezepte werden mit allen geteilt! 👨‍👩‍👧‍👦
+            <br className="hidden md:block" />
+            <span className="md:inline"> </span>Rezepte werden mit allen geteilt! 👨‍👩‍👧‍👦
           </p>
         </div>
 
         {/* Household Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
           {households.map((household) => (
             <button
               key={household.id}
@@ -54,7 +54,7 @@ const HouseholdSelectionModal = () => {
               data-test-id={`select-${household.id}`}
               aria-label={`${household.name} auswählen`}
               className={clsx(
-                'relative p-6 rounded-xl border-2 transition-all duration-200',
+                'relative p-4 md:p-6 rounded-xl border-2 transition-all duration-200',
                 'hover:scale-105 hover:shadow-xl',
                 selectedHousehold?.id === household.id
                   ? 'border-primary-500 bg-primary-600/20'
@@ -69,24 +69,24 @@ const HouseholdSelectionModal = () => {
               )}
 
               {/* Icon */}
-              <div className="text-5xl mb-3">{household.icon}</div>
+              <div className="text-4xl md:text-5xl mb-2 md:mb-3">{household.icon}</div>
 
               {/* Name */}
-              <h3 className="text-lg font-bold text-gray-100 mb-1">
+              <h3 className="text-base md:text-lg font-bold text-gray-100 mb-1">
                 {household.name}
               </h3>
 
               {/* Description */}
               <p className="text-xs text-gray-400">
-                Eigene Einkaufsliste & Planung
+                Eigene Listen & Planung
               </p>
             </button>
           ))}
         </div>
 
         {/* Hint */}
-        <div className="bg-blue-900/30 border border-blue-500/30 rounded-lg p-4 mb-6">
-          <p className="text-sm text-blue-200">
+        <div className="bg-blue-900/30 border border-blue-500/30 rounded-lg p-3 mb-4">
+          <p className="text-xs md:text-sm text-blue-200">
             💡 <strong>Tipp:</strong> Du kannst den Haushalt später jederzeit wechseln!
           </p>
         </div>
@@ -98,7 +98,7 @@ const HouseholdSelectionModal = () => {
           data-test-id="confirm-household"
           aria-label="Haushalt bestätigen"
           className={clsx(
-            'w-full py-4 rounded-xl font-bold text-lg transition-all duration-200',
+            'w-full py-3 md:py-4 rounded-xl font-bold text-base md:text-lg transition-all duration-200',
             selectedHousehold
               ? 'bg-gradient-to-r from-primary-500 to-secondary-500 text-white hover:shadow-xl hover:scale-105'
               : 'bg-gray-700 text-gray-500 cursor-not-allowed'
@@ -110,7 +110,7 @@ const HouseholdSelectionModal = () => {
         </button>
 
         {/* Footer */}
-        <p className="text-center text-xs text-gray-500 mt-4">
+        <p className="text-center text-xs text-gray-500 mt-3">
           Diese Einstellung wird auf deinem Gerät gespeichert
         </p>
       </div>
